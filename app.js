@@ -9,6 +9,8 @@ const indexRouter=require('./routes/index')
 app.set('view engine', 'pug')
 app.set('views',__dirname+'/views')
 app.use(express.static('public'))
+app.use(express.static('files'))
+app.use(express.json())
 
 //MongoDB
 const mongoose = require('mongoose')
