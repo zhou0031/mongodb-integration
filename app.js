@@ -3,7 +3,6 @@ if(process.env.NODE_ENV !== 'production'){
 }
 const express=require('express')
 const app=express()
-const indexRouter=require('./routes/index')
 
 //App
 app.set('view engine', 'pug')
@@ -20,6 +19,9 @@ db.on('error',error=>console.error(error))
 db.once('open',()=>console.log('Connected to Mongoose'))
 
 //Routes
+const indexRouter=require('./routes/index')
 app.use('/',indexRouter)
 
+
+//Port listening
 app.listen(process.env.PORT||3000)
