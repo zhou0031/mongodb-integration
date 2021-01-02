@@ -12,9 +12,13 @@ function scopedCarts(user,carts){
     return carts.filter(cart=>cart.userID === user.id)
 }
 
+function canDeleteCart(user, cart){
+    return cart.userID === user.id
+}
 
 module.exports = {
     canViewCart,
-    scopedCarts
+    scopedCarts,
+    canDeleteCart
 
 }

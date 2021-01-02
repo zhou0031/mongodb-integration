@@ -2,7 +2,7 @@ const express = require('express')
 const router  = express.Router()
 const {carts} = require('../authData')
 const {authUser} = require('../auth')
-const {canViewCart, scopedCarts} = require('../permissions/cart')
+const {canViewCart, canDeleteCart, scopedCarts} = require('../permissions/cart')
 
 router.get('/',(req,res)=>{
     res.json(scopedCarts(req.user,carts))
@@ -10,6 +10,10 @@ router.get('/',(req,res)=>{
 
 router.get('/:cartID', setCart, authUser,authGetCart,(req,res)=>{
     res.json(req.cart)
+})
+
+router.delete('/:cartID',setCart, authUser, authDeleteCart,(req,res)=>{
+    res.send('Deleted cart')
 })
 
 function setCart(req,res,next){
@@ -24,6 +28,14 @@ function setCart(req,res,next){
 
 function authGetCart(req,res,next){
     if(!canViewCart(req.user,req.cart)){
+        res.status(401)
+        return res.send('Not allowed')
+    }
+    next()
+}
+
+function authDeleteCart(req,res,next){
+    if(!canDeleteCart(req.user,req.cart)){
         res.status(401)
         return res.send('Not allowed')
     }
