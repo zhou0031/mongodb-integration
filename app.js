@@ -27,10 +27,10 @@ db.once('open',()=>console.log('Connected to Mongoose'))
 //Routes
 const indexRouter = require('./routes/index')
 const adminRouter = require('./routes/admin')
-const cartRouter  = require('./routes/cart')
+const cartsRouter  = require('./routes/carts')
 app.use('/',indexRouter)
 app.use('/admin',authUser,authRole(ROLE.ADMIN),adminRouter)
-app.use('/cart',cartRouter)
+app.use('/carts',cartsRouter)
 
 
 //Set user (Application-level middleware)

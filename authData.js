@@ -11,8 +11,8 @@ module.exports = {
       { id: 3, name: 'Joe', role: ROLE.BASIC }
     ],
     carts: [
-      { id: 1, name: "Ryan's cart", userId: 1 },
-      { id: 2, name: "Sally's cart", userId: 2 },
-      { id: 3, name: "Joe's cart", userId: 3 }
+      { id: 1, name: "Ryan's cart", userID: 1 },
+      { id: 2, name: "Sally's cart", userID: 2 },
+      { id: 3, name: "Joe's cart", userID: 3 }
     ]
   }
