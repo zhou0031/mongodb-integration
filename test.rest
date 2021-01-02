@@ -1,1 +1,7 @@
-get http://localhost:3000/
+
+get http://localhost:3000/admin
+Content-Type: application/json
+
+{
+    "userID":1
+}
