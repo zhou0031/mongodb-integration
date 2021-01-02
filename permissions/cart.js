@@ -7,6 +7,14 @@ function canViewCart(user, cart){
     )
 }
 
+function scopedCarts(user,carts){
+    if(user.role === ROLE.ADMIN) return carts
+    return carts.filter(cart=>cart.userID === user.id)
+}
+
+
 module.exports = {
-    canViewCart
+    canViewCart,
+    scopedCarts
+
 }

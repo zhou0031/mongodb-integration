@@ -30,7 +30,7 @@ const adminRouter = require('./routes/admin')
 const cartsRouter  = require('./routes/carts')
 app.use('/',indexRouter)
 app.use('/admin',authUser,authRole(ROLE.ADMIN),adminRouter)
-app.use('/carts',cartsRouter)
+app.use('/carts',authUser,cartsRouter)
 
 
 //Set user (Application-level middleware)

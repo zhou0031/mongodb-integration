@@ -1,9 +1,8 @@
 
-get http://localhost:3000/carts/2
+get http://localhost:3000/carts/3
 Content-Type: application/json
 
 {
-    "userID":2
+    "userID":1
 }
-
 

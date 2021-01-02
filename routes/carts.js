@@ -1,11 +1,11 @@
 const express = require('express')
 const router  = express.Router()
 const {carts} = require('../authData')
-const {authUser}=require('../auth')
-const {canViewCart}=require('../permissions/cart')
+const {authUser} = require('../auth')
+const {canViewCart, scopedCarts} = require('../permissions/cart')
 
 router.get('/',(req,res)=>{
-    res.json(carts)
+    res.json(scopedCarts(req.user,carts))
 })
 
 router.get('/:cartID', setCart, authUser,authGetCart,(req,res)=>{
