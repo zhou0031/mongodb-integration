@@ -36,9 +36,9 @@ app.use('/carts',authUser,cartsRouter)
 
 //Set user (Application-level middleware)
 function setUser(req, res, next) {
-    const userId = req.body.userID
-    if (userId) {
-      req.user = users.find(user => user.id === userId)
+    const userID = req.body.userID
+    if (userID) {
+      req.user = users.find(user => user.id === userID)
     }
     next()
 }
