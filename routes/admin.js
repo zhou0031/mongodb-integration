@@ -1,6 +1,5 @@
 const express = require('express')
 const router  = express.Router()
-const {ROLE, users} = require('../data')
 
 
 router.get('/',(req,res)=>{
