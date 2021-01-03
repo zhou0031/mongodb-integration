@@ -1,6 +1,6 @@
 const express = require('express')
 const router  = express.Router()
-const {carts} = require('../authData')
+const {carts} = require('../data')
 const {authUser} = require('../auth')
 const {canViewCart, canDeleteCart, scopedCarts} = require('../permissions/cart')
 

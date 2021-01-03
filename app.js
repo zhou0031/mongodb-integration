@@ -4,7 +4,7 @@ if(process.env.NODE_ENV !== 'production'){
 const express = require('express')
 const app = express()
 const {authUser, authRole} = require('./auth')
-const {ROLE, users} = require('./authData')
+const {ROLE, users} = require('./data')
 
 
 //App

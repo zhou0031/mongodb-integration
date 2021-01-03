@@ -1,4 +1,4 @@
-const {ROLE} = require('../authData') 
+const {ROLE} = require('../data') 
 
 function canViewCart(user, cart){
     return(
