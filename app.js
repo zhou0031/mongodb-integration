@@ -29,7 +29,8 @@ const indexRouter = require('./routes/index')
 const adminRouter = require('./routes/admin')
 const cartsRouter  = require('./routes/carts')
 app.use('/',indexRouter)
-app.use('/admin',authUser,authRole(ROLE.ADMIN),adminRouter)
+//app.use('/admin',authUser,authRole(ROLE.ADMIN),adminRouter)
+app.use('/admin',adminRouter)
 app.use('/carts',authUser,cartsRouter)
 
 
