@@ -1,0 +1,17 @@
+extends ../layout
+
+block css
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;300;500&display=swap" rel="stylesheet">
+    <link href="css/admin.css" rel="stylesheet">
+block body
+     div(class="full-screen-container") 
+        div(class="login-container")
+            h3(class="login-title") Welcome 欢迎
+            form 
+                div(class="input-group")
+                    label Username / 用户名 
+                    input(type="text")
+                div(class="input-group")    
+                    label Password / 密码 
+                    input(type="password")
+                button(type="submit" class="login-button") Log in / 登入
