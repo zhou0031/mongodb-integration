@@ -78,6 +78,10 @@ body {
   cursor: pointer;
 }
 
+.error-message {
+  color: hsl(268, 98%, 33%);
+}
+
 .login-button:hover {
   background-color: hsla(201, 100%, 91%, 0.3);
 }
