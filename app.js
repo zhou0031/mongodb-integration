@@ -4,7 +4,7 @@ if(process.env.NODE_ENV !== 'production'){
 const express = require('express')
 const app = express()
 const {authUser, authRole} = require('./auth')
-const {ROLE, users} = require('./data')
+const {users} = require('./data')
 
 
 //App
@@ -29,7 +29,6 @@ const indexRouter = require('./routes/index')
 const adminRouter = require('./routes/admin')
 const cartsRouter  = require('./routes/carts')
 app.use('/',indexRouter)
-//app.use('/admin',authUser,authRole(ROLE.ADMIN),adminRouter)
 app.use('/admin',adminRouter)
 app.use('/carts',authUser,cartsRouter)
 

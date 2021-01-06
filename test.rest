@@ -1,8 +1,8 @@
 
-DELETE  http://localhost:3000/carts/3
+GET  http://localhost:3000/admin/index
 Content-Type: application/json
 
 {
-    "userID":3
+    "userID":1
 }
 
