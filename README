@@ -4,7 +4,9 @@ Other projects can branch off from this project to
 customize 
 
 Note: Following files are not here
-    * .env
+     .env
+     /node_modules
+     /files
      
 To get working, do following
 1. create folder named files/product_imgs
