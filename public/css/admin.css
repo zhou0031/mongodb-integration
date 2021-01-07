@@ -79,7 +79,8 @@ body {
 }
 
 .error-message {
-  color: hsl(268, 98%, 33%);
+  color: hsl(0, 100%, 11%);
+  font-weight: medium;
 }
 
 .login-button:hover {
