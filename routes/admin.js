@@ -5,7 +5,7 @@ const {users} = require('../data')
 
 router.use(methodOverride('_method'))
 
-//Passport
+//Passport 
 const passport = require('passport')
 const initializePassportAdmin = require('../passport-config')
 initializePassportAdmin(
