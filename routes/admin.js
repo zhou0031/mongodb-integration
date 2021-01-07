@@ -1,9 +1,8 @@
 const express = require('express')
 const router  = express.Router()
-const {authUser, authRole} = require('../auth')
-const {ROLE, users} = require('../data')
+const {users} = require('../data')
 
-
+//Passport
 const passport = require('passport')
 const initializePassportAdmin = require('../passport-config')
 initializePassportAdmin(
@@ -12,7 +11,9 @@ initializePassportAdmin(
     id => users.find(user=>user.id === id)
 )
 
-router.get('/',(req,res)=>{
+
+//Routes
+router.get('/',checkNotAuthenticated,(req,res)=>{
     res.render('admin/login',{"title":"Admin panel（管理员界面）"})
 })
 
@@ -22,9 +23,37 @@ router.post('/login',passport.authenticate('local',{
     failureFlash:true
 }))
 
-
-router.get('/index',authUser,authRole(ROLE.ADMIN),(req,res)=>{
-    res.render('admin/index')
+router.get('/index',checkAuthenticated,(req,res)=>{
+    res.render('admin/index',{"name":req.user.name})
 })
 
+
+//Functions
+/*
+If not authenticated, 
+redirect to admin login page 
+which is at "/admin" path
+Otherwise, continue to admin content page
+*/
+function checkAuthenticated(req,res,next){
+    if(req.isAuthenticated()){
+        return next()
+    }
+    res.redirect('/admin')
+}
+
+/*
+If authenticated, redirect to admin content page
+Otherwise, continue on. 
+This is userful when admin already login, 
+otherwise go back to login page at "/admin" path
+*/
+function checkNotAuthenticated(req,res,next){
+    if(req.isAuthenticated()){
+       return res.redirect('/admin/index')
+    }
+    next()
+}
+
+//export module
 module.exports = router
