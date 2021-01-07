@@ -1,6 +1,9 @@
 const express = require('express')
 const router  = express.Router()
+const methodOverride = require('method-override')
 const {users} = require('../data')
+
+router.use(methodOverride('_method'))
 
 //Passport
 const passport = require('passport')
@@ -22,6 +25,11 @@ router.post('/login',passport.authenticate('local',{
     failureRedirect:'/admin',
     failureFlash:true
 }))
+
+router.delete('/logout',(req,res)=>{
+    req.logOut()
+    res.redirect('/admin')
+})
 
 router.get('/index',checkAuthenticated,(req,res)=>{
     res.render('admin/index',{"name":req.user.name})
