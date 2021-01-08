@@ -1,6 +1,6 @@
 const LocalAdminStrategy = require('passport-local').Strategy
 const bcrypt = require ('bcrypt')
-
+const {ROLE} = require('./data')
 
 function initializePassportAdmin(passport,getUserByUsername,getUserByID){
     
@@ -9,6 +9,11 @@ function initializePassportAdmin(passport,getUserByUsername,getUserByID){
         if(admin == null){
             return done(null,false,{message:"No admin with that username / 管理员用户名不存在"})
         }
+
+        if (admin.role !== ROLE.ADMIN){
+            return done(null,false,{message:"Not Authorized / 没有管理员权限"})
+        }
+        
         //admin username is right
         try{
             if(await bcrypt.compare(password, admin.password)){//find admin user

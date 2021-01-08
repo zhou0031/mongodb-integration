@@ -1,8 +1,9 @@
 
-GET  http://localhost:3000/admin/index
+POST  http://localhost:3000/admin/login
 Content-Type: application/json
 
 {
-    "userID":1
+    "username":"zhou0031",
+    "password":"16249894"
 }
 
