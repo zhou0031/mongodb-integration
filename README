@@ -7,8 +7,8 @@ Note: Following files are not here
      .env
      /node_modules
      /files
+          /product_imgs
      
 To get working, do following
 1. create folder named files/product_imgs
 
-mongodb repo
