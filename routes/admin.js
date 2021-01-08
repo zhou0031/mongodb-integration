@@ -35,7 +35,11 @@ router.delete('/logout',(req,res)=>{
 })
 
 router.get('/index',checkAuthenticated,authRole(ROLE.ADMIN),(req,res)=>{
-    res.render('admin/index',{"name":req.user.name})
+    res.render('admin/index',
+    {
+        "name":req.user.name,
+        "title":"Admin panel（管理员界面）"
+    })
 })
 
 
@@ -65,6 +69,7 @@ function checkNotAuthenticated(req,res,next){
     }
     next()
 }
+
 
 //export module
 module.exports = router

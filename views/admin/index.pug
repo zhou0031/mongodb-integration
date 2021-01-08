@@ -1,3 +1,13 @@
-div Hi #{name}
-form(action="/admin/logout?_method=DELETE" method="POST")
-    button(type="submit") Log Out / 登出
+extends ../layout
+
+block body
+    include ../header.pug
+     
+    div Hi #{name}
+        form(action="/admin/logout?_method=DELETE" method="POST")
+            button(type="submit") Log Out / 登出  
+
+
+    include ../footer.pug
+
+
