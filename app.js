@@ -27,7 +27,6 @@ app.use(passport.initialize())
 app.use(passport.session())
 
 
-
 //MongoDB
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URL,{useUnifiedTopology: true, useNewUrlParser: true})
