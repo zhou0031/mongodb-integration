@@ -10,7 +10,7 @@ router.use(methodOverride('_method'))
 
 //Passport 
 const passport = require('passport')
-const initializePassportAdmin = require('../passport-config')
+const { initializePassportAdmin } = require('../passport-config')
 initializePassportAdmin(
     passport, 
     username => users.find(user => user.username === username),

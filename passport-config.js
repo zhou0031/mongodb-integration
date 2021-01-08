@@ -37,4 +37,6 @@ function initializePassportAdmin(passport,getUserByUsername,getUserByID){
 
 }
 
-module.exports =  initializePassportAdmin
+module.exports =  { 
+    initializePassportAdmin 
+}
