@@ -25,7 +25,6 @@ app.use(session({
 }))
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(setUser)
 
 
 
@@ -44,16 +43,6 @@ const cartsRouter  = require('./routes/carts')
 app.use('/',indexRouter)
 app.use('/admin',adminRouter)
 app.use('/carts',authUser,cartsRouter)
-
-
-//Set user (Application-level middleware)
-function setUser(req, res, next) {
-    const userID = req.body.userID
-    if (userID) {
-      req.user = users.find(user => user.id === userID)
-    }
-    next()
-}
 
 
 //Port listening
