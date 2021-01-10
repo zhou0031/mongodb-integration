@@ -1,7 +1,7 @@
 const express = require('express')
 const router  = express.Router()
 const methodOverride = require('method-override')
-const {ROLE,users} = require('../data')
+const {ROLE} = require('../data')
 const {authRole} = require('../auth')
 
 
@@ -11,10 +11,11 @@ router.use(methodOverride('_method'))
 //Passport 
 const passport = require('passport')
 const { initializePassportAdmin } = require('../passport-config')
+const AdminUser = require('../models/adminUser')
 initializePassportAdmin(
-    passport, 
-    username => users.find(user => user.username === username),
-    id => users.find(user=>user.id === id)
+    passport,
+    username=> AdminUser.findOne({username:username}),
+    id => AdminUser.findById(id)
 )
 
 
@@ -41,7 +42,7 @@ router.get('/index',checkAuthenticated,authRole(ROLE.ADMIN),(req,res)=>{
         "title":"Admin panel（管理员界面）"
     })
 })
-
+    
 
 //Functions
 /*

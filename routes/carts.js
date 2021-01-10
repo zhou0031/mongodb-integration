@@ -16,6 +16,7 @@ router.delete('/:cartID',setCart, authUser, authDeleteCart,(req,res)=>{
     res.send('Deleted cart')
 })
 
+
 function setCart(req,res,next){
     const cartID=parseInt(req.params.cartID)
     req.cart=carts.find(cart=>cart.id===cartID)
@@ -41,5 +42,6 @@ function authDeleteCart(req,res,next){
     }
     next()
 }
+
 
 module.exports = router

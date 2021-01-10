@@ -1,9 +1,12 @@
 
-POST  http://localhost:3000/admin/login
+POST  http://localhost:3000/admin/
 Content-Type: application/json
 
 {
-    "username":"1",
-    "password":"16249894"
+    "username":"zhou0031",
+    "password":"$2a$10$Y//4YQsje55DRWv2yF/saOK0b2s4Jf9/cgIUrVCJvJ90aPx908HS.",
+    "name":"XU"
+    
 }
 
+ 

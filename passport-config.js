@@ -5,7 +5,7 @@ const {ROLE} = require('./data')
 function initializePassportAdmin(passport,getUserByUsername,getUserByID){
     
     const authenticateAdmin = async(username, password, done) => {
-        const admin = getUserByUsername(username)
+        const admin = await getUserByUsername(username)
         if(admin == null){
             return done(null,false,{message:"No admin with that username / 管理员用户名不存在"})
         }
@@ -29,13 +29,14 @@ function initializePassportAdmin(passport,getUserByUsername,getUserByID){
     passport.use(new LocalAdminStrategy({
         usernameField:"username"
     },authenticateAdmin))
-
-    passport.serializeUser((admin,done)=>done(null, admin.id))
-    passport.deserializeUser((id,done)=>{
-        return done(null,getUserByID(id))
+    
+    passport.serializeUser((admin,done)=> done(null, admin.id))
+    passport.deserializeUser(async(id,done)=>{
+        return done(null, await getUserByID(id))
     })
 
 }
+
 
 module.exports =  { 
     initializePassportAdmin 
