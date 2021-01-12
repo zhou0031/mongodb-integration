@@ -21,10 +21,17 @@ initializePassportAdmin(
 
 //Routes
 router.get('/',checkNotAuthenticated,(req,res)=>{
-    res.render('admin/login',{"title":"Admin panel（管理员界面）"})
+    res.render('admin/login',
+        {"title":"Admin panel（管理员界面）",
+        'username':req.session.username})
 })
 
-router.post('/login',passport.authenticate('local',{
+router.post('/login',
+    (req,res,next)=>{
+        req.session.username=req.body.username
+        next()
+    },
+    passport.authenticate('local',{
     successRedirect:'/admin/index',
     failureRedirect:'/admin',
     failureFlash:true

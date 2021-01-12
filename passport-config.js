@@ -2,6 +2,7 @@ const LocalAdminStrategy = require('passport-local').Strategy
 const bcrypt = require ('bcrypt')
 const {ROLE} = require('./data')
 
+
 function initializePassportAdmin(passport,getUserByUsername,getUserByID){
     
     const authenticateAdmin = async(username, password, done) => {
