@@ -9,7 +9,13 @@ body {
 }
 
 .full-screen-container {
-  background-image: url("../images/admin_background.jpg");
+  background-color: #00a6ff;
+  background-image: linear-gradient(
+    0deg,
+    #00a6ff 0%,
+    #b2d6e2 50%,
+    #a6d6ee 100%
+  );
   height: 100vh;
   width: 100vw;
   background-size: cover;

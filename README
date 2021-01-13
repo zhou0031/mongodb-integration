@@ -10,5 +10,6 @@ Note: Following files are not here
           /product_imgs
      
 To get working, do following
-1. create folder named files/product_imgs
+1. npm install
+2. create folder named files/product_imgs
 
