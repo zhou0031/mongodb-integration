@@ -42,10 +42,12 @@ db.once('open',()=>console.log('Connected to Mongoose'))
 //Routes
 const indexRouter = require('./routes/index')
 const adminRouter = require('./routes/admin')
-const cartsRouter  = require('./routes/carts')
+const userRouter  = require('./routes/user')
+const cartRouter  = require('./routes/cart')
 app.use('/',indexRouter)
 app.use('/admin',adminRouter)
-app.use('/carts',authUser,cartsRouter)
+app.use('/user',userRouter)
+app.use('/cart',authUser,cartRouter)
 
 
 //Port listening
