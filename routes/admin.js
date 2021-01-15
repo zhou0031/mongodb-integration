@@ -31,7 +31,7 @@ router.post('/login',
         req.session.username=req.body.username
         next()
     },
-    passport.authenticate('local',{
+    passport.authenticate('localAdmin',{
     successRedirect:'/admin/index',
     failureRedirect:'/admin',
     failureFlash:true

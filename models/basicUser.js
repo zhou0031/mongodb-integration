@@ -20,6 +20,16 @@ const basicUserSchema = new mongoose.Schema({
     name:{
         type:String,
         required:false
+    },
+    canWrite:{
+        type:Boolean,
+        required:true,
+        default:true
+    },
+    canBuy:{
+        type:Boolean,
+        required:true,
+        default:true
     }
 
 })

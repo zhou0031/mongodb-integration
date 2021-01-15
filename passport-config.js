@@ -1,8 +1,8 @@
-const LocalAdminStrategy = require('passport-local').Strategy
+const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require ('bcrypt')
 const {ROLE} = require('./data')
 
-/********************   Initilize admin *************************/
+/********************   Initilize Admin *************************/
 function initializePassportAdmin(passport,getUserByUsername,getUserByID){
     
     const authenticateAdmin = async(username, password, done) => {
@@ -27,7 +27,7 @@ function initializePassportAdmin(passport,getUserByUsername,getUserByID){
         }
     }
 
-    passport.use(new LocalAdminStrategy({
+    passport.use('localAdmin',new LocalStrategy({
         usernameField:"username"
     },authenticateAdmin))
     
@@ -35,10 +35,9 @@ function initializePassportAdmin(passport,getUserByUsername,getUserByID){
     passport.deserializeUser(async(id,done)=>{
         return done(null, await getUserByID(id))
     })
-
 }
 
-/************************     Initilize Basic User    *****************************************/
+/************************     Initilize Basic User    ***********************************/
 function initializePassportBasic(passport,getUserByEmail,getUserByID){
     
     const authenticateBasic = async(email, password, done) => {
@@ -63,7 +62,7 @@ function initializePassportBasic(passport,getUserByEmail,getUserByID){
         }
     }
 
-    passport.use(new LocalAdminStrategy({
+    passport.use('localBasicUser',new LocalStrategy({
         usernameField:"email"
     },authenticateBasic))
     
@@ -71,7 +70,6 @@ function initializePassportBasic(passport,getUserByEmail,getUserByID){
     passport.deserializeUser(async(id,done)=>{
         return done(null, await getUserByID(id))
     })
-
 }
 
 

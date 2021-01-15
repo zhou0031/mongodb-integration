@@ -6,10 +6,14 @@ const {ROLE} = require('../data')
 const {authRole} = require('../auth')
 
 
+router.use(methodOverride('_method'))
+
+
 //Passport 
 const passport = require('passport')
 const { initializePassportBasic } = require('../passport-config')
 const BasicUser = require('../models/basicUser')
+
 initializePassportBasic(
     passport,
     email=> BasicUser.findOne({email:email}),
@@ -23,17 +27,18 @@ router.post('/login',
         req.session.email=req.body.email
         next()
     },
-    passport.authenticate('local',{
+    passport.authenticate('localBasicUser',{
     successRedirect:'/user/index',
-    failureRedirect:'/user/login',
+    failureRedirect:'/user',
     failureFlash:true
 }))
+
 
 router.get('/index',checkAuthenticated,authRole(ROLE.BASIC),(req,res)=>{
     return res.send('user index page')
 })
 
-router.get('/login',checkNotAuthenticated,(req,res)=>{
+router.get('/',checkNotAuthenticated,(req,res)=>{
     return res.send('user login page')
 })
 
@@ -49,7 +54,7 @@ function checkAuthenticated(req,res,next){
     if(req.isAuthenticated()){
         return next()
     }
-    res.redirect('/user/login')
+    res.redirect('/user')
 }
 
 /*
