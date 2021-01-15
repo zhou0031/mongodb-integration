@@ -1,0 +1,12 @@
+extends ../layout/layout
+
+block body
+     include ../partial/_header.pug
+     
+     block body
+          <h2>New user / 欢迎新用户
+          form(action="/user/new", method="POST")
+
+               a(href="/user") Cancel / 取消
+               button(type="submit") Create / 提交
+     include ../partial/_footer.pug

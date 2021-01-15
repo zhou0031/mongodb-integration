@@ -22,6 +22,14 @@ initializePassportBasic(
 
 
 //Router
+router.get('/new',(req,res)=>{
+    res.render('user/new')
+})
+
+router.post('/new',(req,res)=>{
+    return res.send("create user")
+})
+
 router.post('/login',
     (req,res,next)=>{
         req.session.email=req.body.email
@@ -32,7 +40,6 @@ router.post('/login',
     failureRedirect:'/user',
     failureFlash:true
 }))
-
 
 router.get('/index',checkAuthenticated,authRole(ROLE.BASIC),(req,res)=>{
     return res.send('user index page')

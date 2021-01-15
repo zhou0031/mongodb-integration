@@ -5,7 +5,8 @@ const ROLE = {
 
 const MIN_AGE = {
     "TOBACCO" : 21,
-    "SEX" : 18 
+    "SEX" : 18,
+    "DATE": 18 
 }
 
 module.exports = {
