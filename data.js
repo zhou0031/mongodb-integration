@@ -11,5 +11,5 @@ const MIN_AGE = {
 
 module.exports = {
     ROLE: ROLE,
-    MIN_AGE
+    MIN_AGE:MIN_AGE
   }

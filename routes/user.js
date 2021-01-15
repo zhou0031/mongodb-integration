@@ -22,11 +22,11 @@ initializePassportBasic(
 
 
 //Router
-router.get('/new',(req,res)=>{
-    res.render('user/new')
+router.get('/signup',(req,res)=>{
+    res.render('user/signup')
 })
 
-router.post('/new',(req,res)=>{
+router.post('/signup',(req,res)=>{
     return res.send("create user")
 })
 
