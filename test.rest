@@ -1,9 +1,9 @@
 
-POST  http://localhost:3000/admin/login
+POST  http://localhost:3000/user/login
 Content-Type: application/json
 
 {
-    "username":"z_yi23",
+    "email":"ryan.z.williams@gmail.com",
     "password":"1"
 }
 

@@ -17,7 +17,7 @@ app.use(express.static('public'))
 app.use(express.static('files'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.urlencoded({ limit:"1mb", extended:false }))
 app.use(flash())
 app.use(session({
   secret:process.env.SESSION_SECRET,

@@ -7,7 +7,6 @@ const basicUserSchema = new mongoose.Schema({
         type:String,
         required:true,
         unique:true
-       
     },
     password:{
         type:String,
@@ -16,10 +15,6 @@ const basicUserSchema = new mongoose.Schema({
     role:{
         type:String,
         default:ROLE.BASIC
-    },
-    name:{
-        type:String,
-        required:false
     },
     canWrite:{
         type:Boolean,

@@ -4,6 +4,7 @@ const router  = express.Router()
 const methodOverride = require('method-override')
 const {ROLE} = require('../data')
 const {authRole} = require('../auth')
+const BasicUser = require('../models/basicUser')
 
 
 router.use(methodOverride('_method'))
@@ -12,8 +13,6 @@ router.use(methodOverride('_method'))
 //Passport 
 const passport = require('passport')
 const { initializePassportBasic } = require('../passport-config')
-const BasicUser = require('../models/basicUser')
-
 initializePassportBasic(
     passport,
     email=> BasicUser.findOne({email:email}),
