@@ -26,30 +26,30 @@ router.get('/signup',(req,res)=>{
     res.render('user/signup', {basicUser: new BasicUser()})
 })
 
-router.post('/signup', isUserExisted, async(req,res)=>{
+router.post('/signup',isUserExisted, async(req,res)=>{
 
-        await bcrypt.hash(req.body.password,10, async (error, hashedPassword)=>{
+    await bcrypt.hash(req.body.password,10, async (error, hashedPassword)=>{
+        if(error){
+            return res.render('user/signup',{
+            errorMessage:"Password error occured in creating a new user / 密码加密出错，请再试一次"
+            })
+        }
+
+        const basicUser = new BasicUser({ 
+            email: req.body.email,
+            password: hashedPassword
+        })
+
+        await basicUser.save((error)=>{
             if(error){
                 return res.render('user/signup',{
-                errorMessage:"Password error occured in creating a new user / 密码加密出错，请再试一次"
+                    basicUser: basicUser,
+                    errorMessage: "An error occured in creating a new user ／ 系统创建新用户没成功，再试一次"
                 })
             }
-
-            const basicUser = new BasicUser({ 
-                email: req.body.email,
-                password: hashedPassword
-            })
-
-            await basicUser.save((error)=>{
-                if(error){
-                    return res.render('user/signup',{
-                        basicUser: basicUser,
-                        errorMessage: "An error occured in creating a new user ／ 系统创建新用户没成功，再试一次"
-                    })
-                }
-                res.redirect('/user')    
-            })
+            res.redirect('/user')    
         })
+    })
 })
 
 router.post('/login',

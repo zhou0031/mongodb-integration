@@ -1,9 +1,14 @@
 extends ../layout/layout
 
+block css
+     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;300;500&display=swap" rel="stylesheet">
+     <link href="/css/user_signup.css" rel="stylesheet">
+
 block body
      <h2>New user / 欢迎新用户
      form(action="/user/signup", method="POST")
           include ./_signup_form_fields
           include ../partials/_errorMessage
+          a(href="/user") Cancel / 放弃 
           button(type="submit") Create / 提交
      
