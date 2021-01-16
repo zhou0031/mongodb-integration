@@ -4,5 +4,6 @@ block body
      <h2>New user / 欢迎新用户
      form(action="/user/signup", method="POST")
           include ./_signup_form_fields
+          include ../partials/_errorMessage
           button(type="submit") Create / 提交
      

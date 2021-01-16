@@ -4,6 +4,7 @@ const router  = express.Router()
 const methodOverride = require('method-override')
 const {ROLE} = require('../data')
 const {authRole} = require('../auth')
+const bcrypt = require('bcrypt')
 const BasicUser = require('../models/basicUser')
 
 
@@ -22,11 +23,33 @@ initializePassportBasic(
 
 //Router
 router.get('/signup',(req,res)=>{
-    res.render('user/signup')
+    res.render('user/signup', {basicUser: new BasicUser()})
 })
 
-router.post('/signup',(req,res)=>{
-    return res.send("create user")
+router.post('/signup', isUserExisted, async(req,res)=>{
+
+        await bcrypt.hash(req.body.password,10, async (error, hashedPassword)=>{
+            if(error){
+                return res.render('user/signup',{
+                errorMessage:"Password error occured in creating a new user / 密码加密出错，请再试一次"
+                })
+            }
+
+            const basicUser = new BasicUser({ 
+                email: req.body.email,
+                password: hashedPassword
+            })
+
+            await basicUser.save((error)=>{
+                if(error){
+                    return res.render('user/signup',{
+                        basicUser: basicUser,
+                        errorMessage: "An error occured in creating a new user ／ 系统创建新用户没成功，再试一次"
+                    })
+                }
+                res.redirect('/user')    
+            })
+        })
 })
 
 router.post('/login',
@@ -50,6 +73,17 @@ router.get('/',checkNotAuthenticated,(req,res)=>{
 
 
 //Functions
+async function isUserExisted(req,res,next){
+    if(await BasicUser.findOne({email:req.body.email})){
+        const basicUser = new BasicUser({email:req.body.email})
+        return res.render('user/signup',{
+            basicUser:basicUser,
+            errorMessage:"User already existed / 此用户已存在"
+        })
+    }
+    next()
+}
+
 /*
 If not authenticated, 
 redirect to user login page 
