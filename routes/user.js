@@ -12,7 +12,7 @@ router.use(methodOverride('_method'))
 
 
 //Router
-router.get('/signup',(req,res)=>{
+router.get('/signup',checkNotAuthenticated, (req,res)=>{
     res.render('user/signup', {basicUser: new BasicUser()})
 })
 
@@ -35,14 +35,20 @@ router.get('/index', checkAuthenticated, authRole(ROLE.BASIC), (req,res)=>{
 
 //Functions
 async function isUserExisted(req,res,next){
-    const basicUser = await BasicUser.findOne({email:req.body.email})
-    if (basicUser !== null){
-        return res.render('user/signup',{
-            basicUser:basicUser,
-            errorMessage:"User already existed / 此用户已存在"
-        })
+    try{
+        const basicUser = await BasicUser.findOne({email:req.body.email})
+        if (basicUser !== null){
+            return res.render('user/signup',{
+                basicUser:basicUser,
+                errorMessage:"User already existed / 此用户已存在"
+            })
+        }
+        next()
+    }catch(error){
+        console.log(error)
+        res.status(503)
+        res.send("An error occured on server / 服务器出现故障")
     }
-    next()
 }
 
 /*
