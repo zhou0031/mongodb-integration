@@ -37,43 +37,7 @@ function initializePassportAdmin(passport,getUserByUsername,getUserByID){
     })
 }
 
-/************************     Initilize Basic User    ***********************************/
-function initializePassportBasic(passport,getUserByEmail,getUserByID){
-    
-    const authenticateBasic = async(email, password, done) => {
-        const basicUser = await getUserByEmail(email)
-        if(basicUser == null){
-            return done(null,false,{message:"User dosn't exist / 用户不存在"})
-        }
-
-        if (basicUser.role !== ROLE.BASIC){
-            return done(null,false,{message:"Not Authorized / 没有权限从此处登入"})
-        }
-        
-        //basic username is right
-        try{
-            if(await bcrypt.compare(password, basicUser.password)){//find basic user
-                return done(null, basicUser)
-            } else {//basic password didn't match
-                return done(null,false,{message: "password incorrect / 密码有错"})
-            }
-        }catch(e){
-            return done(e)
-        }
-    }
-
-    passport.use('localBasicUser',new LocalStrategy({
-        usernameField:"email"
-    },authenticateBasic))
-    
-    passport.serializeUser((basicUser,done)=> done(null, basicUser.id))
-    passport.deserializeUser(async(id,done)=>{
-        return done(null, await getUserByID(id))
-    })
-}
-
 
 module.exports =  { 
     initializePassportAdmin,
-    initializePassportBasic 
 }

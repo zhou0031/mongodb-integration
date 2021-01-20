@@ -11,56 +11,25 @@ const BasicUser = require('../models/basicUser')
 router.use(methodOverride('_method'))
 
 
-//Passport 
-const passport = require('passport')
-const { initializePassportBasic } = require('../passport-config')
-initializePassportBasic(
-    passport,
-    email=> BasicUser.findOne({email:email}),
-    id => BasicUser.findById(id)
-)
-
-
 //Router
 router.get('/signup',(req,res)=>{
     res.render('user/signup', {basicUser: new BasicUser()})
 })
 
 router.post('/signup',isUserExisted, async(req,res)=>{
-    try{
-        hashedPassword = await bcrypt.hash(req.body.password,10)
-        const basicUser = new BasicUser({ 
-            email: req.body.email,
-            password: hashedPassword
-        })
-        const newBasicUser = await basicUser.save()
-        res.send(`${newBasicUser.id} created`)
-        //res.redirect(`/user/${newBasicUser.id}`)
-    }catch{
-        const basicUser = new BasicUser({ email: req.body.email})
-        return res.render('user/signup',{
-            errorMessage: "An error occured in creating a new user ／ 系统创建新用户没成功，再试一次"
-        })
-    }
-})
-
-router.post('/login',
-    (req,res,next)=>{
-        req.session.email=req.body.email
-        next()
-    },
-    passport.authenticate('localBasicUser',{
-    successRedirect:'/user/index',
-    failureRedirect:'/user',
-    failureFlash:true
-}))
-
-router.get('/index',checkAuthenticated,authRole(ROLE.BASIC),(req,res)=>{
-    return res.send('user index page')
+   
 })
 
 router.get('/',checkNotAuthenticated,(req,res)=>{
-    return res.send('user login page')
+    return res.render('user/login',{title:"Sign in / 欢迎登入"})
+})
+
+router.post('/login',(req,res)=>{
+    res.send('post to login')
+})
+
+router.get('/index', checkAuthenticated, authRole(ROLE.BASIC), (req,res)=>{
+    return res.send('user index page')
 })
 
 
