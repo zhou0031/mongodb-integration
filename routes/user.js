@@ -1,4 +1,3 @@
-
 const express = require('express')
 const router  = express.Router()
 const methodOverride = require('method-override')
@@ -6,6 +5,7 @@ const {ROLE} = require('../data')
 const {authRole} = require('../auth')
 const bcrypt = require('bcrypt')
 const BasicUser = require('../models/basicUser')
+const jwt = require('jsonwebtoken')
 
 
 router.use(methodOverride('_method'))
@@ -24,16 +24,37 @@ router.get('/',checkNotAuthenticated,(req,res)=>{
     return res.render('user/login',{title:"Sign in / 欢迎登入"})
 })
 
-router.post('/login',(req,res)=>{
-    res.send('post to login')
+router.post('/login',async(req,res)=>{
+    try{
+        const user = await BasicUser.findOne({email:req.body.email})
+        if(user==null) return res.status(400).send('Can not find user / 用户不存在')
+        if(await bcrypt.compare(req.body.password, user.password)){
+            const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_TOKEN_SECRET)
+            res.json({accessToken:accessToken})
+        }else{
+            //password incorrect
+            res.status(401)
+            res.render("user/login",{
+                email:req.body.email,
+                errorMessage:"Password incorrect / 密码错误"
+            })
+        }
+    }catch(error){
+        console.log(error)
+        res.status(500)
+        return res.send("An error occured on server / 服务器出现故障")
+    }
 })
 
-router.get('/index', checkAuthenticated, authRole(ROLE.BASIC), (req,res)=>{
-    return res.send('user index page')
+router.get('/index', authenticateToken, authRole(ROLE.BASIC), (req,res)=>{
+    return res.send(req.user)
 })
 
 
 //Functions
+/*
+Check if user is already signed up in database
+*/
 async function isUserExisted(req,res,next){
     try{
         const basicUser = await BasicUser.findOne({email:req.body.email})
@@ -46,22 +67,21 @@ async function isUserExisted(req,res,next){
         next()
     }catch(error){
         console.log(error)
-        res.status(503)
-        res.send("An error occured on server / 服务器出现故障")
+        res.status(500)
+        return res.send("An error occured on server / 服务器出现故障")
     }
 }
 
-/*
-If not authenticated, 
-redirect to user login page 
-which is at "/user/login" path
-Otherwise, continue to user content page
-*/
-function checkAuthenticated(req,res,next){
-    if(req.isAuthenticated()){
-        return next()
-    }
-    res.redirect('/user')
+function authenticateToken(req,res,next){
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+    if(token==null) return res.sendStatus(401)
+
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET,(err,user)=>{
+        if(err) return res.sendStatus(403)
+        req.user = user
+        next()
+    })
 }
 
 /*

@@ -10,10 +10,9 @@ block body
             form(action='/user/login' method="POST") 
                 div(class="input-group")
                     label Email / 邮箱地址 
-                    input(type="email" id="email" name="email")
+                    input(type="email" id="email" name="email" value=email)
                 div(class="input-group")    
                     label Password / 密码 
                     input(type="password" id="password" name="password")
-                if messages.error
-                    div(class="error-message") #{messages.error}
+                include ../partials/_errorMessage
                 button(type="submit" class="login-button") Sign in / 登入
