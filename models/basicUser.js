@@ -24,7 +24,7 @@ const basicUserSchema = new mongoose.Schema({
     canChat:{
         type:Boolean,
         required:true,
-        default:true
+        default:false
     },
     createdOn:{
         type:Date,
