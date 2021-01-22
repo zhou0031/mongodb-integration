@@ -16,15 +16,19 @@ const basicUserSchema = new mongoose.Schema({
         type:String,
         default:ROLE.BASIC
     },
-    canWrite:{
+    canPost:{
         type:Boolean,
         required:true,
         default:true
     },
-    canBuy:{
+    canChat:{
         type:Boolean,
         required:true,
         default:true
+    },
+    createdOn:{
+        type:Date,
+        default:Date.now
     }
 
 })

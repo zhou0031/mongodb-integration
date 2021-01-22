@@ -17,7 +17,15 @@ router.get('/signup',checkNotAuthenticated, (req,res)=>{
 })
 
 router.post('/signup',isUserExisted, async(req,res)=>{
-   
+    try{
+        const hashedPassword = await bcrypt.hash(req.body.password,10)
+        const user = new BasicUser({email:req.body.email,password:hashedPassword})
+        await user.save()
+        res.redirect('/user')
+    }catch{
+        console.log("An error occured in creating a new user/ 创建新用户出错")
+        res.redirect('/user/signup')
+    }
 })
 
 router.get('/',checkNotAuthenticated,(req,res)=>{
