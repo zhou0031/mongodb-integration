@@ -7,6 +7,7 @@ block body
      div(class="full-screen-container") 
         div(class="login-container")
             h3(class="login-title") Welcome 欢迎
+            include ../partials/_errorMessages
             form(action='/user/login' method="POST") 
                 div(class="input-group")
                     label Email / 邮箱地址 
@@ -14,5 +15,4 @@ block body
                 div(class="input-group")    
                     label Password / 密码 
                     input(type="password" id="password" name="password")
-                include ../partials/_errorMessage
                 button(type="submit" class="login-button") Sign in / 登入

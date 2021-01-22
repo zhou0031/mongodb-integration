@@ -8,7 +8,18 @@ const bodyParser= require('body-parser')
 const {authUser} = require('./auth')
 const flash = require("express-flash")
 const session = require("express-session")
+const mongoDBStore = require('connect-mongodb-session')(session)
 
+
+//Mongodb Session Store
+const sessionStore = new mongoDBStore({
+  uri:process.env.DATABASE_URL,
+  collection:"sessions"
+})
+sessionStore.on('error',function(error){
+  console.log("An error occured in session connecting to mongo db / 数据库服务器出现Session链接故障")
+})
+  
 
 //App
 app.set('view engine', 'pug')
@@ -22,7 +33,8 @@ app.use(flash())
 app.use(session({
   secret:process.env.SESSION_SECRET,
   resave:false,
-  saveUninitialized:false
+  saveUninitialized:false,
+  store:sessionStore
 }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -44,6 +56,7 @@ const indexRouter = require('./routes/index')
 const adminRouter = require('./routes/admin')
 const userRouter  = require('./routes/user')
 const cartRouter  = require('./routes/cart')
+const { MongoDBStore } = require('connect-mongodb-session')
 app.use('/',indexRouter)
 app.use('/admin',adminRouter)
 app.use('/user',userRouter)

@@ -8,9 +8,7 @@ Content-Type: application/json
 }
 ###
 GET http://localhost:3000/user/index
-Authorization: Bearer 
-
-
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYmFzaWMiLCJjYW5Xcml0ZSI6dHJ1ZSwiY2FuQnV5Ijp0cnVlLCJfaWQiOiI2MDA0MGRlNWJjM2E4ZmEwNjE2Y2VkNjEiLCJlbWFpbCI6InJ5YW4uei53aWxsaWFtc0BnbWFpbC5jb20iLCJwYXNzd29yZCI6IiQyYiQxMCRjNk9XdVIvbHJ1dFhEUlBtTkw1ZHFPV29aTWJadk9KTUpwdVBjcm42SnpTZXhWZHZrNGJsLiIsIl9fdiI6MCwiaWF0IjoxNjExMjUwNTg2fQ.stBmSxE5CBht44Dc1YDaJt6PGzPV9Ix-abntbWdggGM
 
 
 ###
