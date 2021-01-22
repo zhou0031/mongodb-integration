@@ -33,6 +33,7 @@ router.get('/',checkNotAuthenticated,(req,res)=>{
 })
 
 router.post('/login',async(req,res)=>{
+    let errorMessages=[]
     try{
         const user = await BasicUser.findOne({email:req.body.email})
         if(user==null) return res.status(400).send('Can not find user / 用户不存在')
@@ -41,10 +42,11 @@ router.post('/login',async(req,res)=>{
             res.json({accessToken:accessToken})
         }else{
             //password incorrect
+            errorMessages.push("Password incorrect / 密码错误")
             res.status(401)
             res.render("user/login",{
                 email:req.body.email,
-                errorMessage:"Password incorrect / 密码错误"
+                errorMessages:errorMessages
             })
         }
     }catch(error){
