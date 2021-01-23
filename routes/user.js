@@ -36,23 +36,33 @@ router.post('/login',async(req,res)=>{
     let errorMessages=[]
     try{
         const user = await BasicUser.findOne({email:req.body.email})
-        if(user==null) return res.status(400).send('Can not find user / 用户不存在')
+        if(user==null) {
+            errorMessages.push('Can not find user / 用户不存在')
+            return res.status(403).render("user/login",{
+                email:req.body.email,
+                errorMessages:errorMessages
+            })
+        }
+
         if(await bcrypt.compare(req.body.password, user.password)){
-            const accessToken = jwt.sign(user.toJSON(), process.env.ACCESS_TOKEN_SECRET)
+            //remove password key/value
+            let aUser = user.toObject()
+            delete aUser.password
+            
+            //genereate jwt token
+            const accessToken = jwt.sign(aUser, process.env.ACCESS_TOKEN_SECRET)
             res.json({accessToken:accessToken})
         }else{
             //password incorrect
             errorMessages.push("Password incorrect / 密码错误")
-            res.status(401)
-            res.render("user/login",{
+            return res.status(401).render("user/login",{
                 email:req.body.email,
                 errorMessages:errorMessages
             })
         }
     }catch(error){
         console.log(error)
-        res.status(500)
-        return res.send("An error occured on server / 服务器出现故障")
+        return res.status(500).send("An error occured on server / 服务器出现故障")
     }
 })
 
@@ -61,10 +71,8 @@ router.get('/index', authenticateToken, authRole(ROLE.BASIC), (req,res)=>{
 })
 
 
-//Functions
-/*
-Check if user is already signed up in database
-*/
+/******************* Functions *******************/
+//Check if user is already signed up in database
 async function isUserExisted(req,res,next){
     try{
         const basicUser = await BasicUser.findOne({email:req.body.email})
