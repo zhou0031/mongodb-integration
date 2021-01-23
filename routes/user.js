@@ -48,7 +48,7 @@ router.post('/login',async(req,res)=>{
             //remove password key/value
             let aUser = user.toObject()
             delete aUser.password
-            
+
             //genereate jwt token
             const accessToken = jwt.sign(aUser, process.env.ACCESS_TOKEN_SECRET)
             res.json({accessToken:accessToken})
@@ -96,7 +96,10 @@ function authenticateToken(req,res,next){
     if(token==null) return res.sendStatus(401)
 
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET,(err,user)=>{
-        if(err) return res.sendStatus(403)
+        if(err) {
+            console.log(err)
+            return res.sendStatus(403)
+        }
         req.user = user
         next()
     })
