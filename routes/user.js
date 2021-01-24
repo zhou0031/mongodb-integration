@@ -5,7 +5,6 @@ const {ROLE} = require('../data')
 const {authRole} = require('../auth')
 const bcrypt = require('bcrypt')
 const BasicUser = require('../models/basicUser')
-const jwt = require('jsonwebtoken')
 
 
 router.use(methodOverride('_method'))
@@ -37,7 +36,7 @@ router.post('/login',async(req,res)=>{
     try{
         const user = await BasicUser.findOne({email:req.body.email})
         if(user==null) {
-            errorMessages.push('Can not find user / 用户不存在')
+            errorMessages.push('Authentication failed / 无法通过验证')
             return res.status(403).render("user/login",{
                 email:req.body.email,
                 errorMessages:errorMessages
@@ -45,13 +44,8 @@ router.post('/login',async(req,res)=>{
         }
 
         if(await bcrypt.compare(req.body.password, user.password)){
-            //remove password key/value
-            let aUser = user.toObject()
-            delete aUser.password
-
-            //genereate jwt token
-            const accessToken = jwt.sign(aUser, process.env.ACCESS_TOKEN_SECRET)
-            res.json({accessToken:accessToken})
+            
+            res.send("login post")
         }else{
             //password incorrect
             errorMessages.push("Password incorrect / 密码错误")
@@ -66,12 +60,12 @@ router.post('/login',async(req,res)=>{
     }
 })
 
-router.get('/index', authenticateToken, authRole(ROLE.BASIC), (req,res)=>{
+router.get('/index', checkAuthenticated, authRole(ROLE.BASIC), (req,res)=>{
     return res.send(req.user)
 })
 
 
-/******************* Functions *******************/
+/********************************* Functions ************************************/
 //Check if user is already signed up in database
 async function isUserExisted(req,res,next){
     try{
@@ -90,19 +84,17 @@ async function isUserExisted(req,res,next){
     }
 }
 
-function authenticateToken(req,res,next){
-    const authHeader = req.headers['authorization']
-    const token = authHeader && authHeader.split(' ')[1]
-    if(token==null) return res.sendStatus(401)
-
-    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET,(err,user)=>{
-        if(err) {
-            console.log(err)
-            return res.sendStatus(403)
-        }
-        req.user = user
-        next()
-    })
+/*
+If not authenticated, 
+redirect to admin login page 
+which is at "/admin" path
+Otherwise, continue to admin content page
+*/
+function checkAuthenticated(req,res,next){
+    if(req.isAuthenticated()){
+        return next()
+    }
+    res.redirect('/user')
 }
 
 /*
