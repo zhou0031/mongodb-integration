@@ -6,10 +6,15 @@ Content-Type: application/json
     "email":"ryan.z.williams@gmail.com",
     "password":"1"
 }
-###
-GET http://localhost:3000/user/index
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYmFzaWMiLCJjYW5Qb3N0Ijp0cnVlLCJjYW5DaGF0IjpmYWxzZSwiX2lkIjoiNjAwYWZjOTdmZjlhMjJkMzFhZWUzNzJmIiwiZW1haWwiOiJyeWFuLnoud2lsbGlhbXNAZ21haWwuY29tIiwiY3JlYXRlZE9uIjoiMjAyMS0wMS0yMlQxNjoyNTo1OS4wMzlaIiwiX192IjowLCJpYXQiOjE2MTEzODU2MzIsImV4cCI6MTYxMTM4NTY0N30.JYDK0ZgizLACb4q0tFpwBuBtOYlcdpz9UDXxWfTI-w4
 
+###
+POST  http://localhost:3000/user/login
+Content-Type: application/json
+
+{
+    "email":"ryan.z.williams@gmail.com",
+    "password":"2"
+}
 
 ###
 POST  http://localhost:3000/user/signup
@@ -20,14 +25,6 @@ Content-Type: application/json
     "password":"1"
 }
 
-###
-POST  http://localhost:3000/user/login
-Content-Type: application/json
-
-{
-    "email":"ryan.z.williams@gmail.com",
-    "password":"2"
-}
 ###
 POST  http://localhost:3000/admin/login
 Content-Type: application/json

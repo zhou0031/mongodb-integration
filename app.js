@@ -35,7 +35,10 @@ app.use(session({
   resave:false,
   saveUninitialized:false,
   unset:'destroy',
-  store:sessionStore
+  store:sessionStore,
+  cookie:{
+    maxAge:14400000
+  }
 }))
 app.use(passport.initialize())
 app.use(passport.session())
@@ -57,7 +60,6 @@ const indexRouter = require('./routes/index')
 const adminRouter = require('./routes/admin')
 const userRouter  = require('./routes/user')
 const cartRouter  = require('./routes/cart')
-const { MongoDBStore } = require('connect-mongodb-session')
 app.use('/',indexRouter)
 app.use('/admin',adminRouter)
 app.use('/user',userRouter)
