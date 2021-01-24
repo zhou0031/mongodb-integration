@@ -44,7 +44,10 @@ router.post('/login',async(req,res)=>{
         }
 
         if(await bcrypt.compare(req.body.password, user.password)){
-            
+            req.user=user
+            //serialize user 
+            req.session.basicUser={"user":user.id}
+
             res.send("login post")
         }else{
             //password incorrect
