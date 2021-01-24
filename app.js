@@ -31,6 +31,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.urlencoded({ limit:"1mb", extended:false }))
 app.use(flash())
 app.use(session({
+  name:"selltobacco",
   secret:process.env.SESSION_SECRET,
   resave:false,
   saveUninitialized:false,
