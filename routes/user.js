@@ -44,7 +44,7 @@ router.get('/',checkNotAuthenticated,(req,res)=>{
     return res.render('user/login',{title:"Sign in / 欢迎登入"})
 })
 
-router.post('/login',async(req,res)=>{
+router.post('/',async(req,res)=>{
     let errorMessages=[]
     try{
         const user = await BasicUser.findOne({email:req.body.email})
@@ -75,7 +75,7 @@ router.post('/login',async(req,res)=>{
     }
 })
 
-router.delete('/logout',(req,res)=>{
+router.delete('/',(req,res)=>{
     delete req.session.basicUser
     res.redirect('/user')
 })
