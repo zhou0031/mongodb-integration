@@ -39,7 +39,6 @@ router.post('/login',
 
 router.delete('/logout',(req,res)=>{
     req.logOut()
-    req.session.destroy()
     res.redirect('/admin')
 })
 

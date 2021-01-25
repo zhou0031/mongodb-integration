@@ -1,0 +1,6 @@
+extends ../layout/layout
+
+block body
+    div Hi #{email}
+        form(action="/user/logout?_method=DELETE" method="POST")
+            button(type="submit") Log Out / 登出  

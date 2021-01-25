@@ -8,6 +8,19 @@ const BasicUser = require('../models/basicUser')
 
 
 router.use(methodOverride('_method'))
+//deseriazlize user
+router.use(async(req,res,next)=>{
+    if(req.session.basicUser!=null){
+        try{
+            const user = await BasicUser.findById(req.session.basicUser.user)
+            req.user=user
+        }catch{
+            console.log("An error occured in searching for user / 服务器查找用户出错")
+            return res.status(500).send("An error occured on server / 服务器出现故障")
+        }
+    }
+    next()
+})
 
 
 //Router
@@ -36,7 +49,7 @@ router.post('/login',async(req,res)=>{
     try{
         const user = await BasicUser.findOne({email:req.body.email})
         if(user==null) {
-            errorMessages.push('Authentication failed / 无法通过验证')
+            errorMessages.push('User does not exist / 无此用户')
             return res.status(403).render("user/login",{
                 email:req.body.email,
                 errorMessages:errorMessages
@@ -44,11 +57,10 @@ router.post('/login',async(req,res)=>{
         }
 
         if(await bcrypt.compare(req.body.password, user.password)){
-            req.user=user
             //serialize user 
             req.session.basicUser={"user":user.id}
 
-            res.send("login post")
+            res.redirect('/user/index')
         }else{
             //password incorrect
             errorMessages.push("Password incorrect / 密码错误")
@@ -63,8 +75,16 @@ router.post('/login',async(req,res)=>{
     }
 })
 
+router.delete('/logout',(req,res)=>{
+    delete req.session.basicUser
+    res.redirect('/user')
+})
+
+
 router.get('/index', checkAuthenticated, authRole(ROLE.BASIC), (req,res)=>{
-    return res.send(req.user)
+    return res.render('user/index',{
+        email:req.user.email
+    })
 })
 
 
@@ -94,7 +114,7 @@ which is at "/admin" path
 Otherwise, continue to admin content page
 */
 function checkAuthenticated(req,res,next){
-    if(req.isAuthenticated()){
+    if(req.session.basicUser!=null && req.user!=null){
         return next()
     }
     res.redirect('/user')
@@ -107,7 +127,7 @@ This is userful when user already login,
 otherwise go back to login page at "/user/login" path
 */
 function checkNotAuthenticated(req,res,next){
-    if(req.isAuthenticated()){
+    if(req.session.basicUser!=null && req.user!=null){
        return res.redirect('/user/index')
     }
     next()
