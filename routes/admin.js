@@ -39,6 +39,8 @@ router.post('/login',
 
 router.delete('/logout',(req,res)=>{
     req.logOut()
+    delete req.session.admin
+    delete req.session.passport
     res.redirect('/admin')
 })
 
