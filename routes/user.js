@@ -46,20 +46,12 @@ router.get('/',checkNotAuthenticated,(req,res)=>{
 
 router.post('/',async(req,res)=>{
     let errorMessages=[]
+    let user
     try{
-        const user = await BasicUser.findOne({email:req.body.email})
-        if(user==null) {
-            errorMessages.push('User does not exist / 无此用户')
-            return res.status(403).render("user/login",{
-                email:req.body.email,
-                errorMessages:errorMessages
-            })
-        }
-
+        user = await BasicUser.findOne({email:req.body.email})
         if(await bcrypt.compare(req.body.password, user.password)){
             //serialize user 
             req.session.basicUser={"user":user.id}
-
             res.redirect('/user/index')
         }else{
             //password incorrect
@@ -70,6 +62,13 @@ router.post('/',async(req,res)=>{
             })
         }
     }catch(error){
+        if(user==null) {
+            errorMessages.push('User does not exist / 无此用户')
+            return res.status(403).render("user/login",{
+                email:req.body.email,
+                errorMessages:errorMessages
+            })
+        }
         console.log(error)
         return res.status(500).send("An error occured on server / 服务器出现故障")
     }
