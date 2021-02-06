@@ -9,13 +9,7 @@ body {
 }
 
 .full-screen-container {
-  background-color: #ead9ce;
-  background-image: linear-gradient(
-    62deg,
-    #ead9ce 0%,
-    #f7c08c 42%,
-    #f7a284 93%
-  );
+  background: linear-gradient(to right, #fc5f04, #f7e685);
   height: 100vh;
   width: 100vw;
   background-size: cover;
