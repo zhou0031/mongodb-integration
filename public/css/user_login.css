@@ -95,6 +95,6 @@ body {
   background-color: hsla(201, 100%, 91%, 0.3);
 }
 
-.login-button:focus {
+.login-button:active {
   background-color: hsla(201, 100%, 91%, 0.5);
 }
