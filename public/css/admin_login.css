@@ -99,7 +99,6 @@ body {
   background-color: hsla(201, 100%, 91%, 0.5);
 }
 /***********************************/
-
 @media only screen and (max-height: 460px) {
   .full-screen-container {
     background: none;
