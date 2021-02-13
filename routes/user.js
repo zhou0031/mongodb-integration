@@ -106,7 +106,9 @@ function validateBasicSignup(req,res,next){
     if(!emailValidator.validate(email))
         errorMessages.push("Enter a valid email / 请输入有效邮箱")
     
-    if(password1!==password2)
+    if(password1=="" || password2=="")
+        errorMessages.push("Enter passwords/ 请正确输入密码")  
+    else if(password1!==password2)
         errorMessages.push("Passwords don't match / 密码不一致")
 
     if(errorMessages.length>0){
