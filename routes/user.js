@@ -5,6 +5,7 @@ const {ROLE} = require('../data')
 const {authRole} = require('../auth')
 const bcrypt = require('bcrypt')
 const BasicUser = require('../models/basicUser')
+const emailValidator = require('email-validator')
 
 
 router.use(methodOverride('_method'))
@@ -24,13 +25,20 @@ router.use(async(req,res,next)=>{
 
 
 //Router
+//signup page
 router.get('/signup',checkNotAuthenticated, (req,res)=>{
-    res.render('user/signup', {basicUser: new BasicUser()})
+    res.render('user/signup', 
+    {
+        basicUser: new BasicUser(),
+        title:"Sign up 注册新会员"
+    })
 })
 
-router.post('/signup',isUserExisted, async(req,res)=>{
+//user signup
+router.post('/signup',validateBasicSignup,isUserExisted, signup_userExisted,async(req,res)=>{
+
     try{
-        const hashedPassword = await bcrypt.hash(req.body.password,10)
+        const hashedPassword = await bcrypt.hash(req.body.password1,10)
         const user = new BasicUser({email:req.body.email,password:hashedPassword})
         await user.save()
         res.redirect('/user')
@@ -40,10 +48,12 @@ router.post('/signup',isUserExisted, async(req,res)=>{
     }
 })
 
+//login page
 router.get('/',checkNotAuthenticated,(req,res)=>{
     return res.render('user/login',{title:"Sign in / 欢迎登入"})
 })
 
+//login user
 router.post('/',async(req,res)=>{
     let errorMessages=[]
     let user
@@ -74,12 +84,13 @@ router.post('/',async(req,res)=>{
     }
 })
 
+//logout user
 router.delete('/',(req,res)=>{
     delete req.session.basicUser
     res.redirect('/user')
 })
 
-
+//dashboard
 router.get('/index', checkAuthenticated, authRole(ROLE.BASIC), (req,res)=>{
     return res.render('user/index',{
         email:req.user.email
@@ -88,15 +99,32 @@ router.get('/index', checkAuthenticated, authRole(ROLE.BASIC), (req,res)=>{
 
 
 /********************************* Functions ************************************/
+//validate basic signup inputs
+function validateBasicSignup(req,res,next){
+    let errorMessages=[]
+    const {email,password1,password2}=req.body
+    if(!emailValidator.validate(email))
+        errorMessages.push("Enter a valid email / 请输入有效邮箱")
+    
+    if(password1!==password2)
+        errorMessages.push("Passwords don't match / 密码不一致")
+
+    if(errorMessages.length>0){
+        return res.render("user/signup",{
+            basicUser:new BasicUser({email:email}),
+            title: "Sign up 注册新会员 Validation / 验证",
+            errorMessages:errorMessages
+        })
+    }
+    next()
+}
+
 //Check if user is already signed up in database
 async function isUserExisted(req,res,next){
-    try{
+    try{  
         const basicUser = await BasicUser.findOne({email:req.body.email})
         if (basicUser !== null){
-            return res.render('user/signup',{
-                basicUser:basicUser,
-                errorMessage:"User already existed / 此用户已存在"
-            })
+           res.basicUser=basicUser
         }
         next()
     }catch(error){
@@ -104,6 +132,18 @@ async function isUserExisted(req,res,next){
         res.status(500)
         return res.send("An error occured on server / 服务器出现故障")
     }
+}
+
+//if user existed, re-render signup page with error message 
+function signup_userExisted(req,res,next){
+    if(res.basicUser){//user already existed
+        return res.render("user/signup",{
+            errorMessages:["User already existed / 用户已存在"],
+            title:`Sign up 注册新会员() - ${res.basicUser.email} User already existed / 用户已存在`,
+            basicUser:new BasicUser({email:res.basicUser.email})
+        })
+    }
+    next()
 }
 
 /*

@@ -1,0 +1,127 @@
+* {
+  box-sizing: border-box;
+  font-family: "Work Sans", sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.full-screen-container {
+  background: linear-gradient(to right, #fc5f04, #f7e685);
+  height: 100vh;
+  width: 100vw;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sign-up-container {
+  background-color: hsla(201, 57%, 64%, 0.3);
+  padding: 50px 30px;
+  min-width: 400px;
+  max-width: 500px;
+  width: 50%;
+  border-radius: 5px;
+}
+
+.sign-up-title {
+  color: white;
+  text-align: center;
+  margin: 0;
+  margin-bottom: 40px;
+  font-size: 2.5em;
+  font-weight: 300;
+}
+
+.sign-up-input-group {
+  margin: 0;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.sign-up-input-group input {
+  font-size: 1.5em;
+  padding: 0.1em 0.25em;
+  background-color: hsl(0, 0%, 100%);
+  border: 1px solid hsl(192, 24%, 68%);
+  outline: none;
+  border-radius: 5px;
+  color: rgb(0, 0, 0);
+  font-weight: 300;
+  width: 100%;
+}
+.sign-up-input-group input:focus {
+  border: 3px solid rgb(85, 99, 231);
+}
+
+.sign-up-input-group input::placeholder {
+  color: rgb(0, 0, 0);
+  opacity: 0.5;
+}
+
+.sign-up-button {
+  width: 100%;
+  padding: 10px 3px;
+  border-radius: 5px;
+  border: 1px solid hsl(201, 100%, 50%);
+  background-color: hsla(201, 100%, 50%, 0.8);
+  outline: none;
+  font-size: 1em;
+  font-weight: 300;
+  color: white;
+  cursor: pointer;
+}
+
+.sign-up-button:hover {
+  background-color: hsla(201, 100%, 90%, 0.3);
+}
+.sign-up-button:active {
+  background-color: hsla(201, 100%, 90%, 0.5);
+}
+
+.cancel-link {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  margin-top: 30px;
+  text-align: center;
+}
+
+.error-message {
+  color: rgb(255, 0, 0);
+  margin-bottom: 5px;
+  white-space: nowrap;
+}
+
+/*****************************************/
+@media only screen and (max-width: 1000px) {
+  .sign-up-input-group {
+    position: unset;
+  }
+  .sign-up-input-group .error-group {
+    position: unset;
+    left: unset;
+    top: unset;
+  }
+  .sign-up-input-group .error-group .arrow {
+    display: none;
+  }
+}
+
+@media only screen and (max-height: 460px) {
+  .full-screen-container {
+    background: none;
+  }
+  .sign-up-container {
+    background: none;
+    height: 100vh;
+  }
+  .sign-up-title {
+    color: black;
+  }
+}
