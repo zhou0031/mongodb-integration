@@ -130,7 +130,7 @@ function signup_userExisted(req,res,next){
     if(res.basicUser){//user already existed
         return res.render("user/signup",{
             errorMessages:["User already existed / 用户已存在"],
-            title:`Sign up 注册新会员() - ${res.basicUser.email} User already existed / 用户已存在`,
+            title:`Sign up 注册新会员 - ${res.basicUser.email} User already existed / 用户已存在`,
             basicUser:new BasicUser({email:res.basicUser.email})
         })
     }
