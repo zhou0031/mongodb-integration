@@ -10,21 +10,10 @@ const emailValidator = require('email-validator')
 
 router.use(methodOverride('_method'))
 //deseriazlize user
-router.use(async(req,res,next)=>{
-    if(req.session.basicUser!=null){
-        try{
-            const user = await BasicUser.findById(req.session.basicUser.user)
-            req.user=user
-        }catch{
-            console.log("An error occured in searching for user / 服务器查找用户出错")
-            return res.status(500).send("An error occured on server / 服务器出现故障")
-        }
-    }
-    next()
-})
+router.use(setBasicUser)
 
 
-//Router
+/******************* Router ******************/
 //signup page
 router.get('/signup',checkNotAuthenticated, (req,res)=>{
     res.render('user/signup', 
@@ -105,7 +94,7 @@ function validateBasicSignup(req,res,next){
     const {email,password1,password2}=req.body
     if(!emailValidator.validate(email))
         errorMessages.push("Enter a valid email / 请输入有效邮箱")
-    
+   
     if(password1=="" || password2=="")
         errorMessages.push("Enter passwords/ 请正确输入密码")  
     else if(password1!==password2)
@@ -144,6 +133,20 @@ function signup_userExisted(req,res,next){
             title:`Sign up 注册新会员() - ${res.basicUser.email} User already existed / 用户已存在`,
             basicUser:new BasicUser({email:res.basicUser.email})
         })
+    }
+    next()
+}
+
+//set current user
+async function setBasicUser(req,res,next){
+    if(req.session.basicUser!=null){
+        try{
+            const user = await BasicUser.findById(req.session.basicUser.user)
+            req.user=user
+        }catch{
+            console.log("An error occured in searching for user / 服务器查找用户出错")
+            return res.status(500).send("An error occured on server / 服务器出现故障")
+        }
     }
     next()
 }
