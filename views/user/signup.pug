@@ -5,7 +5,7 @@ block css
      <link href="/css/user_signup.css" rel="stylesheet">
 
 block script 
-      <script defer src="https://www.recaptcha.net/recaptcha/api.js"></script>
+     <script async defer src="https://www.recaptcha.net/recaptcha/api.js?hl=zh-CN"></script>
 
 block body
      div(class="full-screen-container")
@@ -22,6 +22,8 @@ block body
                     div(class="sign-up-input-group")
                          input(name="password2" id="password2" 
                          placeholder="Confirm password 再次输入密码确认")
+                    div(class="recaptcha")     
+                         include ../partials/_recaptcha
                     button(class="sign-up-button") Sign up ／ 提交
                div(class="cancel-link")
                     a(href="/user") Cancel / 放弃
