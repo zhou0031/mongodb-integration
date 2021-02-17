@@ -6,6 +6,8 @@ const {authRole} = require('../auth')
 const bcrypt = require('bcrypt')
 const BasicUser = require('../models/basicUser')
 const emailValidator = require('email-validator')
+const { URLSearchParams } = require('url');
+const fetch = require('node-fetch')
 
 
 router.use(methodOverride('_method'))
@@ -24,7 +26,7 @@ router.get('/signup',checkNotAuthenticated, (req,res)=>{
 })
 
 //user signup
-router.post('/signup',validateBasicSignup,isUserExisted, signup_userExisted,async(req,res)=>{
+router.post('/signup',validateRecaptcha,signup_handleRecaptcha,validateBasicSignup,isUserExisted,signup_handleUserExisted,async(req,res)=>{
 
     try{
         const hashedPassword = await bcrypt.hash(req.body.password1,10)
@@ -88,6 +90,36 @@ router.get('/index', checkAuthenticated, authRole(ROLE.BASIC), (req,res)=>{
 
 
 /********************************* Functions ************************************/
+//Validate Google recaptcha
+async function validateRecaptcha(req,res,next){
+    const captcha = req.body['g-recaptcha-response']
+    const  params = new URLSearchParams();
+    
+    params.append('response',captcha)
+    params.append('secret',process.env.RECAPTCHA_V2_SECRET_KEY)
+    
+    const result = await fetch(process.env.RECAPTCHA_SITE_VERIFY,{ 
+        method:"post",
+        body:params}).then(res => res.json())
+    res.captcha=result.success
+    next()
+}
+
+//if captcha test failed, re-sign up
+function signup_handleRecaptcha(req,res,next){
+    if(!res.captcha){
+        let errorMessages=[]
+        email = req.body.email
+        errorMessages.push("Pass recaptcha test / 需通过人机身份验证")
+        return res.render("user/signup",{
+            basicUser:new BasicUser({email:email}),
+            title: "Sign up 注册新会员 Recaptcha Test / 人机身份验证",
+            errorMessages:errorMessages
+        })
+    }
+    next()
+}
+
 //validate basic signup inputs
 function validateBasicSignup(req,res,next){
     let errorMessages=[]
@@ -126,7 +158,7 @@ async function isUserExisted(req,res,next){
 }
 
 //if user existed, re-render signup page with error message 
-function signup_userExisted(req,res,next){
+function signup_handleUserExisted(req,res,next){
     if(res.basicUser){//user already existed
         return res.render("user/signup",{
             errorMessages:["User already existed / 用户已存在"],

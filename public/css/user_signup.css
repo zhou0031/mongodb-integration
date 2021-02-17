@@ -103,21 +103,7 @@ body {
   margin-bottom: 10px;
 }
 /*****************************************/
-@media only screen and (max-width: 1000px) {
-  .sign-up-input-group {
-    position: unset;
-  }
-  .sign-up-input-group .error-group {
-    position: unset;
-    left: unset;
-    top: unset;
-  }
-  .sign-up-input-group .error-group .arrow {
-    display: none;
-  }
-}
-
-@media only screen and (max-height: 460px) {
+@media only screen and (max-height: 570px) {
   .full-screen-container {
     background: none;
   }
@@ -126,6 +112,9 @@ body {
     height: 100vh;
   }
   .sign-up-title {
+    color: black;
+  }
+  .sign-up-button {
     color: black;
   }
 }
