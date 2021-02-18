@@ -93,15 +93,20 @@ router.get('/index', checkAuthenticated, authRole(ROLE.BASIC), (req,res)=>{
 //Validate Google recaptcha
 async function validateRecaptcha(req,res,next){
     const captcha = req.body['g-recaptcha-response']
-    const  params = new URLSearchParams();
-    
+    const params = new URLSearchParams();
+    let result
+
     params.append('response',captcha)
     params.append('secret',process.env.RECAPTCHA_V2_SECRET_KEY)
     
-    const result = await fetch(process.env.RECAPTCHA_SITE_VERIFY,{ 
+    try{
+        result = await fetch(process.env.RECAPTCHA_SITE_VERIFY,{ 
         method:"post",
         body:params}).then(res => res.json())
-    res.captcha=result.success
+    }catch(error){
+        console.log(error)
+    }
+    res.captcha=result?result.success:false
     next()
 }
 
@@ -111,7 +116,7 @@ function login_handleRecaptcha(req,res,next){
         let errorMessages=[]
         email = req.body.email
         errorMessages.push("Pass recaptcha test / 需通过人机身份验证")
-        return res.render("user/login",{
+        return res.status(401).render("user/login",{
             email:email,
             title: "Sign in 欢迎登入 Recaptcha Test / 人机身份验证",
             errorMessages:errorMessages
@@ -126,7 +131,7 @@ function signup_handleRecaptcha(req,res,next){
         let errorMessages=[]
         email = req.body.email
         errorMessages.push("Pass recaptcha test / 需通过人机身份验证")
-        return res.render("user/signup",{
+        return res.status(401).render("user/signup",{
             basicUser:new BasicUser({email:email}),
             title: "Sign up 注册新会员 Recaptcha Test / 人机身份验证",
             errorMessages:errorMessages
