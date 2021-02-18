@@ -103,7 +103,7 @@ body {
   margin-bottom: 10px;
 }
 /*****************************************/
-@media only screen and (max-height: 570px) {
+@media only screen and (max-height: 600px) {
   .full-screen-container {
     background: none;
   }
