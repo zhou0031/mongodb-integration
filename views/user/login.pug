@@ -3,16 +3,22 @@ extends ../layout/layout
 block css
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;300;500&display=swap" rel="stylesheet">
     <link href="/css/user_login.css" rel="stylesheet">
+
+block script 
+    <script defer src="https://www.recaptcha.net/recaptcha/api.js?hl=zh-CN"></script>
+
 block body
      div(class="full-screen-container") 
         div(class="login-container")
             h3(class="login-title") Welcome 欢迎
             form(action='/user' method="POST") 
+                include ../partials/_errorMessages
                 div(class="input-group")
                     label Email / 邮箱地址 
                     input(type="email" id="email" name="email" value=email)
                 div(class="input-group")    
                     label Password / 密码 
                     input(type="password" id="password" name="password")
-                include ../partials/_errorMessages
+                div(class="recaptcha")     
+                    include ../partials/_recaptchaV2
                 button(type="submit" class="login-button") Sign in / 登入

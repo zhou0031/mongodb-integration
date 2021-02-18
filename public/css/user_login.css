@@ -99,7 +99,7 @@ body {
   background-color: hsla(201, 100%, 91%, 0.5);
 }
 /*******************************/
-@media only screen and (max-height: 460px) {
+@media only screen and (max-height: 580px) {
   .full-screen-container {
     background: none;
   }
@@ -117,6 +117,9 @@ body {
     color: black;
   }
   .input-group input {
+    color: black;
+  }
+  .error-message {
     color: black;
   }
 }

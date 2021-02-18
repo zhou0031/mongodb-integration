@@ -45,7 +45,7 @@ router.get('/',checkNotAuthenticated,(req,res)=>{
 })
 
 //login user
-router.post('/',async(req,res)=>{
+router.post('/',validateRecaptcha,login_handleRecaptcha,async(req,res)=>{
     let errorMessages=[]
     let user
     try{
@@ -102,6 +102,21 @@ async function validateRecaptcha(req,res,next){
         method:"post",
         body:params}).then(res => res.json())
     res.captcha=result.success
+    next()
+}
+
+//if captcha failed, re-login
+function login_handleRecaptcha(req,res,next){
+    if(!res.captcha){
+        let errorMessages=[]
+        email = req.body.email
+        errorMessages.push("Pass recaptcha test / 需通过人机身份验证")
+        return res.render("user/login",{
+            email:email,
+            title: "Sign in 欢迎登入 Recaptcha Test / 人机身份验证",
+            errorMessages:errorMessages
+        })
+    }
     next()
 }
 
