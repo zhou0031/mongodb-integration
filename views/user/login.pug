@@ -6,12 +6,13 @@ block css
 
 block script 
     <script defer src="https://www.recaptcha.net/recaptcha/api.js?hl=zh-CN"></script>
+    <script defer src="/js/recaptchaV3.js"></script>
 
 block body
      div(class="full-screen-container") 
         div(class="login-container")
             h3(class="login-title") Welcome 欢迎
-            form(action='/user' method="POST") 
+            form(action='/user' method="POST" id="form") 
                 include ../partials/_errorMessages
                 div(class="input-group")
                     label Email / 邮箱地址 
@@ -19,6 +20,9 @@ block body
                 div(class="input-group")    
                     label Password / 密码 
                     input(type="password" id="password" name="password")
-                div(class="recaptcha")     
-                    include ../partials/_recaptchaV2
-                button(type="submit" class="login-button") Sign in / 登入
+                button(type="submit" 
+                        class="login-button g-recaptcha"
+                        data-badge="bottomleft"
+                        data-sitekey="6LeRXVkaAAAAAOb-WsEJ9Hr24GrytKSu2nDuf3tJ"
+                        data-callback='onSubmit'
+                        data-action="submit") Sign in / 登入

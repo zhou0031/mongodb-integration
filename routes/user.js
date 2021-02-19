@@ -1,12 +1,13 @@
-const express = require('express')
-const router  = express.Router()
-const methodOverride = require('method-override')
-const {ROLE} = require('../data')
-const {authRole} = require('../auth')
-const bcrypt = require('bcrypt')
-const BasicUser = require('../models/basicUser')
-const emailValidator = require('email-validator')
-const {validateRecaptcha} = require('../captcha/recaptcha')
+const express               = require('express')
+const router                = express.Router()
+const methodOverride        = require('method-override')
+const {ROLE}                = require('../data')
+const {authRole}            = require('../auth')
+const bcrypt                = require('bcrypt')
+const BasicUser             = require('../models/basicUser')
+const emailValidator        = require('email-validator')
+const {validateRecaptchaV2,validateRecaptchaV3}   = require('../captcha/recaptcha')
+const {RECAPTCHA}           = require('../data')
 
 
 router.use(methodOverride('_method'))
@@ -25,7 +26,7 @@ router.get('/signup',checkNotAuthenticated, (req,res)=>{
 })
 
 //user signup
-router.post('/signup',validateRecaptcha,signup_handleRecaptcha,validateBasicSignup,isUserExisted,signup_handleUserExisted,async(req,res)=>{
+router.post('/signup',validateRecaptchaV2,signup_handleRecaptcha,validateBasicSignup,isUserExisted,signup_handleUserExisted,async(req,res)=>{
 
     try{
         const hashedPassword = await bcrypt.hash(req.body.password1,10)
@@ -44,7 +45,7 @@ router.get('/',checkNotAuthenticated,(req,res)=>{
 })
 
 //login user
-router.post('/',validateRecaptcha,login_handleRecaptcha,async(req,res)=>{
+router.post('/',validateRecaptchaV3,login_handleRecaptcha,async(req,res)=>{
     let errorMessages=[]
     let user
     try{
@@ -91,7 +92,7 @@ router.get('/index', checkAuthenticated, authRole(ROLE.BASIC), (req,res)=>{
 /********************************* Functions ************************************/
 //if captcha failed, re-login
 function login_handleRecaptcha(req,res,next){
-    if(!res.captcha){
+    if(res.captcha<RECAPTCHA.MIN_SCORE){
         let errorMessages=[]
         email = req.body.email
         errorMessages.push("Pass recaptcha test / 需通过人机身份验证")
