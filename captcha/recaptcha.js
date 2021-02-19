@@ -38,7 +38,6 @@ async function validateRecaptchaV3(req,res,next){
     }catch(error){
         console.log(error)
     }
-    
     res.captcha=(result && result.success)?result.score:RECAPTCHA.BOT
     next()
 }
