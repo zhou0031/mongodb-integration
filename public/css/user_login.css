@@ -65,7 +65,7 @@ body {
 }
 
 .login-button {
-  padding: 10px 30px;
+  padding: 5px 5px;
   width: 100%;
   border-radius: 5px;
   background-color: hsla(201, 100%, 50%, 0.8);
@@ -74,7 +74,7 @@ body {
   font-size: 1.5em;
   font-weight: lighter;
   color: white;
-  margin-top: 20px;
+  margin-top: 10px;
   cursor: pointer;
 }
 
@@ -98,8 +98,22 @@ body {
 .login-button:active {
   background-color: hsla(201, 100%, 91%, 0.5);
 }
+
+.new-account {
+  margin: 0;
+  padding: 0;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.new-account a {
+  padding-top: 10px;
+}
+
 /*******************************/
-@media only screen and (max-height: 580px) {
+@media only screen and (max-height: 550px) {
   .full-screen-container {
     background: none;
   }

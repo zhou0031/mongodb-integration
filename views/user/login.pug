@@ -1,5 +1,8 @@
 extends ../layout/layout
 
+block meta 
+    include  ../partials/_google_auth_meta
+
 block css
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;300;500&display=swap" rel="stylesheet">
     <link href="/css/user_login.css" rel="stylesheet">
@@ -7,13 +10,14 @@ block css
 block script 
     <script defer src="https://www.recaptcha.net/recaptcha/api.js?hl=zh-CN"></script>
     <script defer src="/js/recaptchaV3.js"></script>
+    <script defer src="/js/platform.js"></script>
 
 block body
      div(class="full-screen-container") 
         div(class="login-container")
             h3(class="login-title") Welcome 欢迎
+            include ../partials/_errorMessages
             form(action='/user' method="POST" id="form") 
-                include ../partials/_errorMessages
                 div(class="input-group")
                     label Email / 邮箱地址 
                     input(type="email" id="email" name="email" value=email)
@@ -26,3 +30,6 @@ block body
                         data-sitekey="6LeRXVkaAAAAAOb-WsEJ9Hr24GrytKSu2nDuf3tJ"
                         data-callback='onSubmit'
                         data-action="submit") Sign in / 登入
+                div(class="new-account") 
+                    a(href="/user/signup") Create a new account 创建账号
+                    div(class="g-signin2" data-onsuccess="onSignIn")
