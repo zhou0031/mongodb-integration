@@ -110,6 +110,9 @@ body {
 
 .new-account a {
   padding-top: 10px;
+  color: white;
+  font-weight: 100;
+  font-size: large;
 }
 
 /*******************************/
@@ -134,6 +137,9 @@ body {
     color: black;
   }
   .error-message {
+    color: black;
+  }
+  .new-account a {
     color: black;
   }
 }

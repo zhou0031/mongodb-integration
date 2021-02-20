@@ -92,6 +92,12 @@ body {
   text-align: center;
 }
 
+.cancel-link a {
+  color: white;
+  font-weight: 100;
+  font-size: large;
+}
+
 .error-message {
   color: rgb(255, 0, 0);
   margin-bottom: 10px;
@@ -115,6 +121,9 @@ body {
     color: black;
   }
   .sign-up-button {
+    color: black;
+  }
+  .cancel-link a {
     color: black;
   }
 }
