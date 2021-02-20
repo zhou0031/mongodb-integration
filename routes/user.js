@@ -34,7 +34,7 @@ router.post('/signup',validateRecaptchaV2,signup_handleRecaptcha,validateBasicSi
         await user.save()
         res.redirect('/user')
     }catch{
-        console.log("An error occured in creating a new user/ 创建新用户出错")
+        console.log("An error occured in creating a new user / 创建新用户出错")
         res.redirect('/user/signup')
     }
 })
@@ -128,7 +128,7 @@ function validateBasicSignup(req,res,next){
         errorMessages.push("Enter a valid email / 请输入有效邮箱")
    
     if(password1=="" || password2=="")
-        errorMessages.push("Enter passwords/ 请正确输入密码")  
+        errorMessages.push("Enter passwords / 请正确输入密码")  
     else if(password1!==password2)
         errorMessages.push("Passwords don't match / 密码不一致")
 
