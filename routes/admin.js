@@ -3,6 +3,8 @@ const router  = express.Router()
 const methodOverride = require('method-override')
 const {ROLE} = require('../data')
 const {authRole} = require('../auth')
+const {validateRecaptchaV3}   = require('../captcha/recaptcha')
+const {RECAPTCHA} = require('../data')
 
 
 router.use(methodOverride('_method'))
@@ -19,14 +21,18 @@ initializePassportAdmin(
 )
 
 
-//Routes
+/************************** Routes *****************************/
+//login page
 router.get('/',checkNotAuthenticated,(req,res)=>{
     res.render('admin/login',
-        {"title":"Admin panel（管理员界面）",
-        'admin':req.session.admin})
+        {
+            "title":"Admin panel（管理员界面）",
+            'admin':req.session.admin
+        })
 })
 
-router.post('/login',
+//login user
+router.post('/',validateRecaptchaV3,login_handleRecaptcha,
     (req,res,next)=>{
         req.session.admin=req.body.username
         next()
@@ -37,13 +43,15 @@ router.post('/login',
     failureFlash:true
 }))
 
-router.delete('/logout',(req,res)=>{
+//log out
+router.delete('/',(req,res)=>{
     req.logOut()
     delete req.session.admin
     delete req.session.passport
     res.redirect('/admin')
 })
 
+//admin dashboard
 router.get('/index',checkAuthenticated,authRole(ROLE.ADMIN),(req,res)=>{
     res.render('admin/index',
     {
@@ -53,7 +61,15 @@ router.get('/index',checkAuthenticated,authRole(ROLE.ADMIN),(req,res)=>{
 })
     
 
-//Functions
+/******************************** Functions ***********************************/
+//if captcha failed, re-login
+function login_handleRecaptcha(req,res,next){
+    if(res.captcha<RECAPTCHA.MIN_SCORE){
+        return res.redirect("/admin")
+    }
+    next()
+}
+
 /*
 If not authenticated, 
 redirect to admin login page 

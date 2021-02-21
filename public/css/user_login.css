@@ -109,13 +109,23 @@ body {
 }
 
 .new-account a {
-  padding-top: 10px;
+  padding-top: 15px;
   color: white;
   font-weight: 100;
   font-size: large;
 }
 
 /*******************************/
+@media only screen and (max-width: 870px) {
+  .new-account {
+    justify-content: space-evenly;
+  }
+  .new-account a {
+    font-weight: 500;
+    font-size: small;
+  }
+}
+
 @media only screen and (max-height: 550px) {
   .full-screen-container {
     background: none;

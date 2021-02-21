@@ -3,18 +3,29 @@ extends ../layout/layout
 block css
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;300;500&display=swap" rel="stylesheet">
     <link href="/css/admin_login.css" rel="stylesheet">
+
+block script 
+    <script defer src="https://www.recaptcha.net/recaptcha/api.js?hl=zh-CN"></script>
+    <script defer src="/js/google/recaptchaV3.js"></script>
+
 block body
      div(class="full-screen-container") 
         div(class="login-container")
             h3(class="login-title") Welcome 欢迎
-            form(action='/admin/login' method="POST") 
+            include ../partials/_errorMessages
+            if messages.error
+                div(class="error-message") #{messages.error}
+            form(action='/admin' method="POST" id="form") 
                 div(class="input-group")
                     label Username / 用户名 
                     input(type="text" id="username" name="username" value=admin)
                 div(class="input-group")    
                     label Password / 密码 
                     input(type="password" id="password" name="password")
-                if messages.error
-                    div(class="error-message") #{messages.error}
-                button(type="submit" class="login-button") Log in / 登入
+                button(type="submit" 
+                        class="login-button g-recaptcha"
+                        data-badge="bottomleft"
+                        data-sitekey="6LeRXVkaAAAAAOb-WsEJ9Hr24GrytKSu2nDuf3tJ"
+                        data-callback='onSubmit'
+                        data-action="submit") Log in / 登入
             
