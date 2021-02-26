@@ -1,6 +1,9 @@
 extends ../layout/layout
 
+block script
+    <script defer src="/js/google/google-auth.js"></script>
+    <script defer src="https://apis.google.com/js/platform.js?onload=init"></script>
+
 block body
-    div Hi #{email}
-        form(action="/user?_method=DELETE" method="POST")
-            button(type="submit") Log Out / 登出  
+    include ../partials/_basic_user_signout_button
+    include ../partials/_google_signout_button

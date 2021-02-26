@@ -10,9 +10,9 @@ block css
 block script 
     <script defer src="https://www.recaptcha.net/recaptcha/api.js?hl=zh-CN"></script>
     <script defer src="/js/google/recaptchaV3.js"></script>
-    <script defer src="/js/google/platform.js"></script>
     <script defer src="/js/google/google-auth.js"></script>
-
+    <script defer src="/js/google/platform.js"></script>
+    
 block body
      div(class="full-screen-container") 
         div(class="login-container")
@@ -33,4 +33,4 @@ block body
                         data-action="submit") Sign in / 登入
             div(class="new-account") 
                 a(href="/user/signup") Create a new account 创建账号
-                div(class="g-signin2" data-onsuccess="onSignIn")
+                include ../partials/_google_signin_button

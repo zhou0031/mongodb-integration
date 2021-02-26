@@ -8,6 +8,7 @@ const BasicUser             = require('../models/basicUser')
 const emailValidator        = require('email-validator')
 const {validateRecaptchaV2,validateRecaptchaV3}   = require('../captcha/recaptcha')
 const {RECAPTCHA}           = require('../data')
+const {setGoogleUser}       = require('./user/helper')
 
 
 //google user route used for checkiing google id token
@@ -18,6 +19,7 @@ router.use("/google",googleRoute)
 router.use(methodOverride('_method'))
 //deseriazlize user
 router.use(setBasicUser)
+router.use(setGoogleUser)
 
 
 /******************* Router ******************/
@@ -190,12 +192,15 @@ async function setBasicUser(req,res,next){
 
 /*
 If not authenticated, 
-redirect to admin login page 
-which is at "/admin" path
-Otherwise, continue to admin content page
+redirect to user login page 
+which is at "/user" path
+Otherwise, continue to user content page
 */
 function checkAuthenticated(req,res,next){
-    if(req.session.basicUser!=null && req.user!=null){
+    if(req.session.basicUser!=null){
+        return next()
+    }
+    if(req.session.googleUser!=null){
         return next()
     }
     res.redirect('/user')
@@ -205,11 +210,14 @@ function checkAuthenticated(req,res,next){
 If authenticated, redirect to user content page
 Otherwise, continue on. 
 This is userful when user already login, 
-otherwise go back to login page at "/user/login" path
+otherwise go back to login page at "/user" path
 */
 function checkNotAuthenticated(req,res,next){
-    if(req.session.basicUser!=null && req.user!=null){
-       return res.redirect('/user/index')
+    if(req.session.basicUser!=null){
+        return res.redirect('/user/index')
+    }
+    if(req.session.googleUser!=null){
+        return res.redirect('/user/index')
     }
     next()
 }
