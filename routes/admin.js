@@ -5,9 +5,11 @@ const {ROLE} = require('../data')
 const {authRole} = require('../auth')
 const {validateRecaptchaV3}   = require('../captcha/recaptcha')
 const {RECAPTCHA} = require('../data')
+const {setAdmin} = require('./helper')
 
 
 router.use(methodOverride('_method'))
+router.use(setAdmin)
 
 
 //Passport 
@@ -77,7 +79,7 @@ which is at "/admin" path
 Otherwise, continue to admin content page
 */
 function checkAuthenticated(req,res,next){
-    if(req.isAuthenticated()){
+    if(req.session.passport!=null){
         return next()
     }
     res.redirect('/admin')
@@ -90,7 +92,7 @@ This is userful when admin already login,
 otherwise go back to login page at "/admin" path
 */
 function checkNotAuthenticated(req,res,next){
-    if(req.isAuthenticated()){
+    if(req.session.passport!=null){
        return res.redirect('/admin/index')
     }
     next()
