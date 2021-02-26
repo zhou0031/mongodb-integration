@@ -8,7 +8,7 @@ const BasicUser             = require('../models/basicUser')
 const emailValidator        = require('email-validator')
 const {validateRecaptchaV2,validateRecaptchaV3}   = require('../captcha/recaptcha')
 const {RECAPTCHA}           = require('../data')
-const {setGoogleUser}       = require('./user/helper')
+const {setBasicUser, setGoogleUser} = require('./helper')
 
 
 //google user route used for checkiing google id token
@@ -172,20 +172,6 @@ function signup_handleUserExisted(req,res,next){
             title:`Sign up 注册新会员 - ${res.basicUser.email} User already existed / 用户已存在`,
             basicUser:new BasicUser({email:res.basicUser.email})
         })
-    }
-    next()
-}
-
-//set current user
-async function setBasicUser(req,res,next){
-    if(req.session.basicUser!=null){
-        try{
-            const user = await BasicUser.findById(req.session.basicUser.user)
-            req.user=user
-        }catch{
-            console.log("An error occured in searching for user / 服务器查找用户出错")
-            return res.status(500).send("An error occured on server / 服务器出现故障")
-        }
     }
     next()
 }
