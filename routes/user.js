@@ -8,7 +8,6 @@ const BasicUser             = require('../models/basicUser')
 const emailValidator        = require('email-validator')
 const {validateRecaptchaV2,validateRecaptchaV3}   = require('../captcha/recaptcha')
 const {RECAPTCHA}           = require('../data')
-const {setBasicUser, setGoogleUser} = require('./helper')
 
 
 //google user route used for checkiing google id token
@@ -17,9 +16,6 @@ router.use("/google",googleRoute)
 
 
 router.use(methodOverride('_method'))
-//deseriazlize user
-router.use(setBasicUser)
-router.use(setGoogleUser)
 
 
 /******************* Router ******************/
@@ -91,7 +87,7 @@ router.delete('/',(req,res)=>{
 //dashboard
 router.get('/index', checkAuthenticated, authRole(ROLE.BASIC), (req,res)=>{
     return res.render('user/index',{
-        email:req.user.email
+        user:req.user
     })
 })
 

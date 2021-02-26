@@ -1,2 +1,6 @@
-include ./_signout_buttons/_basic_user_signout_button 
-include ./_signout_buttons/_google_signout_button 
+if user.google_id
+    include ./_signout_buttons/_google_signout_button 
+else    
+    include ./_signout_buttons/_basic_user_signout_button 
+
+

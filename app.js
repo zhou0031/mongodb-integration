@@ -9,6 +9,7 @@ const {authUser} = require('./auth')
 const flash = require("express-flash")
 const session = require("express-session")
 const mongoDBStore = require('connect-mongodb-session')(session)
+const {setBasicUser, setGoogleUser} = require('./routes/helper')
 
 
 //Mongodb Session Store
@@ -44,6 +45,9 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
+//deseriazlize user
+app.use(setBasicUser)
+app.use(setGoogleUser)
 
 //MongoDB
 const mongoose = require('mongoose')
