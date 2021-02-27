@@ -1,0 +1,28 @@
+* {
+  box-sizing: border-box;
+  font-family: "Work Sans", sans-serif;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+.signout-button {
+  border: 1px solid hsla(201, 100%, 50%, 0.507);
+  outline: none;
+  margin: 0;
+  padding: 10px;
+  background: linear-gradient(to right top, #207180, #778385);
+  color: white;
+  font-weight: 300;
+  cursor: pointer;
+}
+
+.signout-button:hover {
+  background: linear-gradient(to right top, #627a7e, #116f80);
+}
+
+.signout-button:active {
+  background: linear-gradient(to right top, #a0b1b4, #1db6d1);
+}
