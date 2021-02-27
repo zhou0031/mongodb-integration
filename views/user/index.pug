@@ -1,19 +1,20 @@
 extends ../layout/layout
+ 
+include ../partials/_user_mixin
 
-block css 
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@100;300;500&display=swap" rel="stylesheet">
-    <link href="/css/user_index.css" rel="stylesheet">
-
-block script
-    if user.google_id
-        <script defer src="/js/google/google-auth.js"></script>
-        <script defer src="https://apis.google.com/js/platform.js?onload=init"></script>
+block css    
+    +font-css 
+    <link href="/css/user_index.css" rel="stylesheet"> 
+block script     
+    +google-signout     
 
 block body
+
     div(class="header")
         div
-            if user 
-                include ../partials/_signout_button 
+            include ../partials/_signout_button 
     
     include ../partials/_footer
+
+    
     
