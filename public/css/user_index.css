@@ -13,7 +13,7 @@ body {
   outline: none;
   margin: 0;
   padding: 10px;
-  background: linear-gradient(to right top, #207180, #778385);
+  background-color: hsla(201, 100%, 50%, 0.8);
   color: white;
   font-weight: 300;
   cursor: pointer;
@@ -21,10 +21,10 @@ body {
 }
 
 .signout-button:hover {
-  background: linear-gradient(to right top, #627a7e, #116f80);
+  background-color: hsla(201, 100%, 69%, 0.959);
 }
 
 .signout-button:active {
-  background: linear-gradient(to right top, #a0b1b4, #1db6d1);
+  background-color: hsla(201, 100%, 50%, 0.5);
   color: black;
 }
