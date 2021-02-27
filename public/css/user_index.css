@@ -1,11 +1,22 @@
 * {
   box-sizing: border-box;
   font-family: "Work Sans", sans-serif;
+  font-weight: 300;
 }
 
 html,
 body {
   margin: 0;
+}
+
+.header {
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+}
+
+.header div:last-child {
+  margin-left: auto;
 }
 
 .signout-button {

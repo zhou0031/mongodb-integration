@@ -10,5 +10,10 @@ block script
         <script defer src="https://apis.google.com/js/platform.js?onload=init"></script>
 
 block body
-    include ../partials/_signout_button
+    div(class="header")
+        div
+            if user 
+                include ../partials/_signout_button 
+    
     include ../partials/_footer
+    
