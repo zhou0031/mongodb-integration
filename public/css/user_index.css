@@ -17,6 +17,7 @@ body {
   color: white;
   font-weight: 300;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .signout-button:hover {
@@ -25,4 +26,5 @@ body {
 
 .signout-button:active {
   background: linear-gradient(to right top, #a0b1b4, #1db6d1);
+  color: black;
 }
