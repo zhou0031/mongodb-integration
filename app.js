@@ -1,6 +1,7 @@
 if(process.env.NODE_ENV !== 'production'){
     require('dotenv').config()
 }
+const compression = require('compression')
 const express = require('express')
 const app = express()
 const passport = require('passport')
@@ -30,6 +31,7 @@ app.use(express.static('files'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.urlencoded({ limit:"1mb", extended:false }))
+app.use(compression())
 app.use(flash())
 app.use(session({
   name:"selltobacco",
