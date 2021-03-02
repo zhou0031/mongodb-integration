@@ -136,6 +136,7 @@ body {
   }
   .cancel-link a {
     color: black;
+    font-size: 1rem;
   }
   .error-message {
     color: black;
