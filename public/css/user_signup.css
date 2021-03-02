@@ -123,6 +123,10 @@ body {
   .sign-up-title {
     color: black;
   }
+  .sign-up-input-group input {
+    color: black;
+    font-size: 1.1rem;
+  }
   .sign-up-input-group input::placeholder {
     color: black;
     opacity: 1;

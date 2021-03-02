@@ -17,13 +17,13 @@ block body
                form(action="/user/signup", method="POST")
                     div(class="sign-up-input-group")
                          input(name="email" id="email" 
-                         placeholder="邮箱地址" value=basicUser.email)          
+                              type="email" placeholder="邮箱地址" value=basicUser.email)          
                     div(class="sign-up-input-group")
                          input(name="password1" id="password1" 
-                         placeholder="输入密码")
+                              type="password" placeholder="输入密码")
                     div(class="sign-up-input-group")
                          input(name="password2" id="password2" 
-                         placeholder="再次输入密码确认")
+                              type="password" placeholder="再次输入密码确认")
                     div(class="recaptcha")     
                          include ../partials/_recaptchaV2
                     button(class="sign-up-button") 提交
