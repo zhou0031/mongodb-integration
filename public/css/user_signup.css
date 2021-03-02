@@ -72,7 +72,7 @@ body {
   background-color: hsla(201, 100%, 50%, 0.8);
   outline: none;
   font-size: 1em;
-  font-weight: 300;
+  font-weight: 100;
   color: white;
   cursor: pointer;
 }
@@ -99,13 +99,7 @@ body {
 }
 
 .error-message {
-  background: rgb(131, 58, 180);
-  background: linear-gradient(
-    90deg,
-    rgba(131, 58, 180, 1) 0%,
-    rgba(253, 29, 135, 0.28895308123249297) 50%,
-    rgba(252, 176, 69, 1) 100%
-  );
+  background: linear-gradient(to right, #fd0000, #f1a095);
   margin-bottom: 10px;
   white-space: nowrap;
   color: white;
