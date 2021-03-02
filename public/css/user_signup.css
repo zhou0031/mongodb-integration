@@ -1,6 +1,6 @@
 * {
   box-sizing: border-box;
-  font-family: "Work Sans", sans-serif;
+  font-family: "Noto Sans SC", sans-serif;
 }
 
 html,
@@ -47,20 +47,20 @@ body {
 .sign-up-input-group input {
   font-size: 1.5em;
   padding: 0.1em 0.25em;
-  background-color: hsl(0, 0%, 100%);
+  background-color: hsla(201, 100%, 91%, 0.3);
   border: 1px solid hsl(192, 24%, 68%);
   outline: none;
   border-radius: 5px;
-  color: rgb(0, 0, 0);
-  font-weight: 300;
+  color: white;
+  font-weight: 100;
   width: 100%;
 }
 .sign-up-input-group input:focus {
-  border: 3px solid rgb(85, 99, 231);
+  border: 1px solid hsl(201, 100%, 50%);
 }
 
 .sign-up-input-group input::placeholder {
-  color: rgb(0, 0, 0);
+  color: white;
   opacity: 0.5;
 }
 
@@ -122,6 +122,10 @@ body {
   }
   .sign-up-title {
     color: black;
+  }
+  .sign-up-input-group input::placeholder {
+    color: black;
+    opacity: 1;
   }
   .sign-up-button {
     color: black;
