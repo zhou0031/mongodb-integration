@@ -59,7 +59,7 @@ router.post('/',validateRecaptchaV3,login_handleRecaptcha,async(req,res)=>{
             res.redirect('/user/index')
         }else{
             //password incorrect
-            errorMessages.push("Password incorrect / 密码错误")
+            errorMessages.push("密码错误")
             return res.status(401).render("user/login",{
                 email:req.body.email,
                 errorMessages:errorMessages
@@ -67,7 +67,7 @@ router.post('/',validateRecaptchaV3,login_handleRecaptcha,async(req,res)=>{
         }
     }catch(error){
         if(user==null) {
-            errorMessages.push('User does not exist / 无此用户')
+            errorMessages.push('无此用户')
             return res.status(403).render("user/login",{
                 email:req.body.email,
                 errorMessages:errorMessages
@@ -98,7 +98,7 @@ function login_handleRecaptcha(req,res,next){
     if(res.captcha<RECAPTCHA.MIN_SCORE){
         let errorMessages=[]
         email = req.body.email
-        errorMessages.push("Pass recaptcha test / 需通过人机身份验证")
+        errorMessages.push("需通过人机身份验证")
         return res.status(401).render("user/login",{
             email:email,
             title: "Sign in 欢迎登入 Recaptcha Test / 人机身份验证",
@@ -113,7 +113,7 @@ function signup_handleRecaptcha(req,res,next){
     if(!res.captcha){
         let errorMessages=[]
         email = req.body.email
-        errorMessages.push("Pass recaptcha test / 需通过人机身份验证")
+        errorMessages.push("需通过人机身份验证")
         return res.status(401).render("user/signup",{
             basicUser:new BasicUser({email:email}),
             title: "Sign up 注册新会员 Recaptcha Test / 人机身份验证",
@@ -128,12 +128,12 @@ function validateBasicSignup(req,res,next){
     let errorMessages=[]
     const {email,password1,password2}=req.body
     if(!emailValidator.validate(email))
-        errorMessages.push("Enter a valid email / 请输入有效邮箱")
+        errorMessages.push("请输入有效邮箱")
    
     if(password1=="" || password2=="")
-        errorMessages.push("Enter passwords / 请正确输入密码")  
+        errorMessages.push("请正确输入密码")  
     else if(password1!==password2)
-        errorMessages.push("Passwords don't match / 密码不一致")
+        errorMessages.push("密码不一致")
 
     if(errorMessages.length>0){
         return res.render("user/signup",{
@@ -164,7 +164,7 @@ async function isUserExisted(req,res,next){
 function signup_handleUserExisted(req,res,next){
     if(res.basicUser){//user already existed
         return res.render("user/signup",{
-            errorMessages:["User already existed / 用户已存在"],
+            errorMessages:["用户已存在"],
             title:`Sign up 注册新会员 - ${res.basicUser.email} User already existed / 用户已存在`,
             basicUser:new BasicUser({email:res.basicUser.email})
         })
