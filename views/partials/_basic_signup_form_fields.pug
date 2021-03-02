@@ -1,8 +1,6 @@
-label Email / 邮箱地址
-input(type="email" name="email" id="email" value=basicUser.email)
-
-label Password / 密码
-input(type='password' name='password' id='password' )
-
-label Confirm Password / 确认密码
-input(type='password' name='confirm_password' id='confirm_password' )
+div(class="sign-up-input-group")
+    input(name="email" id="email" placeholder="邮箱地址" value=basicUser.email)          
+div(class="sign-up-input-group")
+    input(name="password1" id="password1" type="password" placeholder="输入密码")
+div(class="sign-up-input-group")
+    input(name="password2" id="password2" type="password" placeholder="再次输入密码确认")
