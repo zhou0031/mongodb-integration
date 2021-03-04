@@ -55,6 +55,7 @@ body {
   font-weight: 100;
   width: 100%;
 }
+
 .sign-up-input-group input:focus {
   border: 1px solid hsl(201, 100%, 50%);
 }
