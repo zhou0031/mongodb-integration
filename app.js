@@ -51,6 +51,7 @@ app.use(passport.session())
 app.use(setBasicUser)
 app.use(setGoogleUser)
 
+
 //MongoDB
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE_URL,{
@@ -72,6 +73,12 @@ app.use('/admin',adminRouter)
 app.use('/user',userRouter)
 app.use('/cart',authUser,cartRouter)
 
+//404
+app.use(function (req, res, next) {
+  res.status(404).render("404",{
+      title:"404 Not found!!!"
+  })
+})
 
 //Port listening
 app.listen(process.env.PORT||3000)

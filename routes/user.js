@@ -91,12 +91,6 @@ router.get('/index', checkAuthenticated, authRole(ROLE.BASIC), (req,res)=>{
     })
 })
 
-//404
-router.use(function (req, res, next) {
-    res.status(404).render("404",{
-        title:"404 Not found!!!"
-    })
-})
 /********************************* Functions ************************************/
 //if captcha failed, re-login
 function login_handleRecaptcha(req,res,next){
