@@ -40,7 +40,7 @@ body {
 .input-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .input-group label {
@@ -63,6 +63,13 @@ body {
 
 .input-group input:focus {
   border: 1px solid hsl(201, 100%, 50%);
+}
+
+.input-group .forgot-password {
+  margin-left: auto;
+  font-weight: 100;
+  font-size: large;
+  color: white;
 }
 
 .login-button {
@@ -119,6 +126,10 @@ body {
     font-weight: 500;
     font-size: small;
   }
+  .input-group .forgot-password {
+    font-weight: 500;
+    font-size: small;
+  }
 }
 
 @media only screen and (max-height: 550px) {
@@ -139,6 +150,9 @@ body {
     color: black;
   }
   .input-group input {
+    color: black;
+  }
+  .input-group .forgot-password {
     color: black;
   }
   .error-message {
