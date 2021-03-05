@@ -138,7 +138,7 @@ body {
   }
 }
 
-@media only screen and (max-height: 550px) {
+@media only screen and (max-height: 590px) {
   .full-screen-container {
     background: none;
   }
