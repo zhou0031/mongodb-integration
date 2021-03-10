@@ -5,7 +5,6 @@ const compression = require('compression')
 const express = require('express')
 const app = express()
 const passport = require('passport')
-const bodyParser= require('body-parser')
 const {authUser} = require('./auth')
 const flash = require("express-flash")
 const session = require("express-session")
@@ -23,17 +22,8 @@ sessionStore.on('error',function(error){
 })
   
 
-//App
-app.set('view engine', 'pug')
-app.set('views',__dirname+'/views')
-app.use(express.static('public'))
-app.use(express.static('files'))
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-app.use(bodyParser.urlencoded({ limit:"1mb", extended:false }))
-app.use(compression())
-app.use(flash())
-app.use(session({
+//Session middleware
+sessionMiddleware=session({
   name:"selltobacco",
   secret:process.env.SESSION_SECRET,
   resave:false,
@@ -43,7 +33,19 @@ app.use(session({
   cookie:{
     maxAge:14400000
   }
-}))
+})
+
+
+//App
+app.set('view engine', 'pug')
+app.set('views',__dirname+'/views')
+app.use(express.static('public'))
+app.use(express.static('files'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(compression())
+app.use(flash())
+app.use(sessionMiddleware)
 app.use(passport.initialize())
 app.use(passport.session())
 
@@ -82,3 +84,8 @@ app.use(function (req, res, next) {
 
 //Port listening
 app.listen(process.env.PORT||3000)
+
+
+module.exports={
+  sessionMiddleware
+}

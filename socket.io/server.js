@@ -5,9 +5,10 @@ const io = require("socket.io")(httpServer,{
         methods: ["GET", "POST"]
       }
 })
+
 /*********************************************************************** */
 io.on("connection", socket => { 
-    console.log("user connected")
+    console.log(`${socket.id} connected`)
     
     socket.on('chat-message', (message) => {
         io.emit('chat-message', message)
