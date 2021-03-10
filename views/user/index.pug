@@ -5,15 +5,23 @@ include ../partials/_user_mixin
 block css    
     +font-css 
     <link href="/css/user_index.css" rel="stylesheet"> 
+    <link href="/css/chat.css" rel="stylesheet"> 
 block script     
     +google-signout     
     +socket-io
 
 block body
-
     div(class="header")
         div
             include ../partials/_signout_button 
+        
+    div(class="chat-content")     
+        ul(id="messages")
+        form(id="form" action="")   
+            input(id="input" autocomplete="off")
+            button Send
+    
+
     
     
     
