@@ -14,6 +14,8 @@ form.addEventListener('submit', function(e) {
   }
 })
 
+
+
 socket.on('chat-message', function(message) {
   var item = document.createElement('li')
   item.textContent = message

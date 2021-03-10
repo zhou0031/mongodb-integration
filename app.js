@@ -84,8 +84,3 @@ app.use(function (req, res, next) {
 
 //Port listening
 app.listen(process.env.PORT||3000)
-
-
-module.exports={
-  sessionMiddleware
-}
