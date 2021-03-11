@@ -1,5 +1,4 @@
 extends ../layout/layout
- 
 include ../partials/_user_mixin
 
 block css    
@@ -7,7 +6,7 @@ block css
     <link href="/css/user_index.css" rel="stylesheet"> 
     <link href="/css/chat.css" rel="stylesheet"> 
 block script     
-    +google-signout     
+    +google-signout  
     +socket-io
 
 block body
@@ -21,7 +20,7 @@ block body
             input(id="input" autocomplete="off")
             button Send
     
-
+    
     
     
     

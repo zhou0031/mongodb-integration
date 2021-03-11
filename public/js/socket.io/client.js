@@ -1,9 +1,8 @@
-const socket = io('http://localhost:3001',{
+const socket = io(`http://localhost:3001`,{
   autoConnect:true
 })
 var form = document.getElementById('form');
 var input = document.getElementById('input');
-
 
 
 form.addEventListener('submit', function(e) {
@@ -13,7 +12,6 @@ form.addEventListener('submit', function(e) {
     input.value = ''
   }
 })
-
 
 
 socket.on('chat-message', function(message) {

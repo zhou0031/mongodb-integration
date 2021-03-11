@@ -6,7 +6,7 @@ const AdminUser = require('../models/adminUser')
 async function setBasicUser(req,res,next){
     if(req.session.basicUser!=null){
         try{
-            const user = await BasicUser.findById(req.session.basicUser.user)
+            const user = await BasicUser.findById(req.session.basicUser.user).select('-password')
             req.user=user
         }catch{
             console.log("An error occured in searching for user / 服务器查找用户出错")
