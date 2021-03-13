@@ -70,5 +70,5 @@ async function google_handleUserExisted(req,res,next){
 }
 
 
-//Modue export
+//Module export
 module.exports = router

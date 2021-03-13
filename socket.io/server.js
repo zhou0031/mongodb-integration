@@ -1,4 +1,6 @@
-const httpServer = require("http").createServer()
+const express = require('express')
+const app = express() 
+const httpServer = require('http').Server(app)
 const io = require("socket.io")(httpServer,{
     cors: {
         origin: "http://localhost:3000",
