@@ -10,7 +10,7 @@ router.use(methodOverride('_method'))
 
 router.get('/getUser',apiAuthUser,(req,res)=>{
     const user = req.user
-    const userAccessToken = jwt.sign({user},process.env.JWT_ACCESS_TOKEN_SECRET)
+    const userAccessToken = jwt.sign(user.toJSON(),process.env.JWT_ACCESS_TOKEN_SECRET)
     res.json({userAccessToken:userAccessToken})
 })
 
