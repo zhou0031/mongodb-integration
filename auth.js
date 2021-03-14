@@ -15,8 +15,15 @@ function authRole(role){
     }
 }
 
+function apiAuthUser(req,res,next){
+    if(req.user == null){
+        res.status(401).send("Sign in requred (请先登录)")
+    }
+    next()
+}
 
 module.exports = {
     authUser,
-    authRole
+    authRole,
+    apiAuthUser
 }

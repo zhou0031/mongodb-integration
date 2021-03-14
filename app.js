@@ -49,6 +49,7 @@ app.use(sessionMiddleware)
 app.use(passport.initialize())
 app.use(passport.session())
 
+
 //deseriazlize user
 app.use(setBasicUser)
 app.use(setGoogleUser)

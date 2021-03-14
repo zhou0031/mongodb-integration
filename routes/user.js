@@ -10,9 +10,12 @@ const {validateRecaptchaV2,validateRecaptchaV3}   = require('../captcha/recaptch
 const {RECAPTCHA}           = require('../data')
 
 
-//google user route used for checkiing google id token
 const googleRoute=require('./user/google')
+const apiRoute = require('./user/api')
+
+
 router.use("/google",googleRoute)
+router.use("/api",apiRoute)
 
 
 router.use(methodOverride('_method'))
